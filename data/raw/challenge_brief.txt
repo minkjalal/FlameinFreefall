@@ -1,0 +1,277 @@
+﻿Challenge Brief: Flame in Freefall
+At a glance
+Teams must build an interactive, AI-powered dashboard that turns NASA's decades of microgravity fire experiments into clear fire-safety insights for crewed missions.
+Item
+	Detail
+	Challenge
+	Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data
+	Difficulty
+	Advanced and Intermediate
+	Subject tags
+	Space Exploration
+	Type
+	AI-powered research dashboard
+	Best suited for
+	Teams with AI and data skills, a web developer, and someone from physics, chemistry or engineering to check the science
+	Typical output
+	A web dashboard with search, AI summaries, ranked findings and safety insights, each linked to its NASA source
+	Full challenge statement and official data list
+	Full statement out; data list on 13 November 2026
+	Hackathon
+	14 to 15 November 2026
+	Judging begins
+	16 November 2026
+	Status of this brief
+	Matches NASA's full challenge statement (checked 12 November 2026). NASA's data list follows on 13 November.
+	Microgravity is the near-weightless condition inside an orbiting spacecraft. Combustion is the scientific word for burning.
+The challenge in simple words
+Fire behaves differently in space. Without gravity, hot air does not rise, so a flame does not point upward. It can become a slow, round, blue ball that is hard to see and hard to predict. A fire inside a sealed spacecraft is one of the most dangerous things that can happen to a crew.
+NASA has studied this for decades and holds a very large amount of experimental data. The problem is the volume. NASA's summary says the results are hard to find, compare and understand.
+The knowledge matters more now, because people are returning to the Moon and preparing for Mars. The team's job is to use AI to make this body of results usable.
+In one line: build an interactive AI dashboard that summarises, ranks and interprets NASA's microgravity fire research, so people who design and fly spacecraft can find the fire-safety lessons quickly.
+What NASA's full statement adds
+NASA published the full statement in November. The points below are taken from it. Where they differ from the rest of this brief, follow NASA.
+* NASA now writes "SI" (Super Intelligence) for AI, so the official title reads "SI-Powered". The task is the same.
+* The data source is NASA's Physical Science Informatics (PSI) database of low-gravity combustion results, mostly from the Space Station.
+* Investigations NASA names: BASS and BASS-II, and Saffire I to III (burning of solid materials); SAME and SAME-R (smoke detection); FLEX, FLEX-2 and the Cool Flames Investigation (fuel droplets and extinguishing); the six ACME gas-flame experiments, including BRE, CFI-G and E-FIELD Flames; SPICE and SLICE; DAFT.
+* The dashboard should find the investigations most relevant to crew habitats (spacecraft, stations, Moon and Mars bases, pressurised rovers), pull out data for predicting flammability and fire scenarios, and point to research for future fire safety equipment. Uses on Earth may be included.
+* Attributes to summarise: objectives, fuel and sample shape and size, oxygen level, airflow, what varied between tests, and the sensors used; also similarities and differences between investigations.
+* Key context: the Moon base and pressurised rovers are expected to use 30% oxygen or more at about 10.2 psi or less, which makes materials much more flammable. Spacesuits use 100% oxygen at 4.3 psi.
+* PSI holds no partial-gravity data yet; microgravity and normal-gravity results can bound it. Rocket and propellant fires are out of scope.
+* Audience: professors, graduate and undergraduate students, aerospace researchers and engineers.
+Objective: what teams have to make
+The deliverable is a dashboard with three AI jobs, each named in NASA's summary: summarise, rank and interpret. Most teams will do the first and stop.
+Job
+	What it means
+	Example
+	Summarise
+	Turn a long experiment record or paper into a short, accurate account
+	"This experiment burned plastic sheets at three air speeds and found the flame spread fastest at the middle speed"
+	Rank
+	Put findings in order by something useful
+	The findings most relevant to a question; the conditions with the highest fire risk; the results with the strongest evidence
+	Interpret
+	Say what the finding means for fire safety on a mission
+	"For a Moon habitat with more oxygen in its air, this material needs extra protection"
+	Three more requirements come from the summary:
+* Interactive. The user searches, filters, asks questions and compares. A fixed report is not a dashboard.
+* AI-powered. AI must do real work in the tool, not sit beside it as a general chatbot.
+* Fire-safety insights for human space exploration. The end product is practical lessons for crewed missions, not a library catalogue.
+The smallest complete project: 20 to 50 real NASA experiment records or papers, organised by a few fields such as material, oxygen level, gravity level and air flow; search and filters; an AI summary for each with a link to the source; a ranked list of findings in answer to a question; and a short insight for each top finding explaining what it means for a spacecraft or habitat.
+The rule that protects everything else: every summary, ranking and insight must be traceable to a NASA source the user can open. An AI that states fire-safety "facts" it cannot back up is worse than no tool.
+Why this challenge matters
+A crew in space cannot run outside or call a fire brigade. The spacecraft is sealed, the air is limited, and on a deep-space mission there is no quick way home.
+* Fire has already cost lives and nearly cost more. In 1967 the Apollo 1 crew died in a cabin fire during a ground test. In 1997 a fire on the Mir space station burned for several minutes before the crew controlled it.
+* New missions bring new conditions. Future vehicles and habitats may use air with a higher share of oxygen than on Earth, which makes materials burn more easily. Fire in the weak gravity of the Moon and Mars has been tested far less than fire in orbit.
+* The answers exist but are scattered. Results sit in many reports, papers and datasets from different experiments over many years. An engineer choosing a material cannot read them all.
+* This is a good job for AI. Reading large amounts of text and pulling out what matters is what language models do well, provided they are tied to the real sources.
+Why it matters for our teams
+* Many students already use AI tools, so the technical start is quick.
+* It needs no hardware and no large downloads of satellite data.
+* The subject is unusual, which gives room for original work.
+* It rewards teams that are careful with facts. A team that proves its AI is accurate will stand out from teams with a plain chatbot.
+Background: how fire behaves in space
+On Earth, hot gas rises and pulls fresh air into the flame from below. In microgravity that does not happen, and almost everything about a fire changes. These points come from general NASA combustion research, so teams must confirm each one in a NASA source.
+On Earth
+	In microgravity
+	Why it matters for safety
+	Flames are tall, yellow and point upward
+	Flames are round, blue and dim
+	A fire can be hard to see
+	Hot air rising feeds the fire
+	Oxygen reaches the flame slowly, or is carried by the cabin's ventilation
+	Air flow from fans controls how the fire grows and where it spreads
+	Smoke rises to the ceiling
+	Smoke drifts with the air currents
+	Smoke detectors must sit in the ventilation path
+	Materials are tested for fire safety in normal gravity
+	A gentle air flow can make some materials burn more easily than on Earth
+	Materials safe on the ground may not be safe in space
+	Flames need a fairly hot temperature
+	Some fuels can keep burning as nearly invisible "cool flames"
+	A fire that seems to be out may not be
+	The variables that appear in most experiments
+* Material or fuel: plastic, fabric, paper, liquid droplets, gas.
+* Oxygen level: the share of oxygen in the air. More oxygen means easier burning.
+* Pressure: how dense the air is.
+* Air flow: the speed and direction of the moving air.
+* Gravity level: Earth, the Moon (one sixth), Mars (about three eighths) or microgravity.
+* What was measured: whether it ignites, how fast the flame spreads, when it goes out.
+These are the natural fields for organising, filtering and ranking the findings.
+NASA experiments teams will meet in the data
+Experiment
+	What it studied
+	Saffire
+	Large fires lit on purpose inside empty cargo spacecraft after they left the Space Station
+	BASS
+	How small solid samples burn and how the flames are put out
+	FLEX
+	Burning fuel droplets, where cool flames were discovered
+	SoFIE
+	Ignition and burning of solid materials in different atmospheres
+	ACME
+	Gas flames in microgravity
+	Drop towers at NASA's Glenn Research Center
+	A few seconds of weightlessness on the ground for quick tests
+	What a strong project looks like
+A strong project puts a modest set of real NASA findings in order, lets the user question them, and shows the source behind every answer. Trust is the product.
+What strong projects have in common
+* A real collection of NASA experiment records or papers, with the list published.
+* AI answers built only from that collection, each with a link to the source passage.
+* All three jobs present: summaries, rankings and interpretations.
+* Ranking rules the user can see, such as "ranked by fire risk" or "ranked by relevance to your question".
+* Insights written for a decision: what a designer, safety engineer or crew should do differently.
+* A check of accuracy: the team tested the AI on questions with known answers and reports how it did.
+* Honest gaps: the tool says "no data found" when the collection does not cover a question.
+Project ideas to start discussion
+Idea
+	What it is
+	Main skills
+	Ask the archive
+	A question box that answers from NASA fire research and shows the sources used
+	AI retrieval, web development
+	Experiment explorer
+	Cards for each experiment with filters, AI summaries and a side-by-side compare view
+	Data organising, design
+	Material risk ranker
+	Materials ranked by how easily they burn under a chosen atmosphere
+	Data extraction, science checking
+	Habitat what-if
+	User sets oxygen level, pressure and gravity, and sees the findings that apply
+	Data modelling, interface design
+	Gap finder
+	A map of which conditions have been tested and which have not, such as Moon gravity
+	Analysis, visualisation
+	Safety brief writer
+	Produces a one-page fire-safety brief on a chosen topic, with every claim referenced
+	AI writing, science checking
+	Timeline of discovery
+	Shows how understanding of space fire grew from experiment to experiment
+	Storytelling, design
+	Two practical tips. Prepare AI outputs for the demo in advance so a slow or failed AI service cannot break the pitch. Prefer free or open AI models, so judges can open the tool later without a paid key.
+Data and resources to start with
+NASA publishes the official data list for this challenge on 13 November, the day before the hackathon, and it will matter a great deal here: the challenge is built around a specific body of experiment data. Until then, these NASA sources hold the research.
+Resource
+	What it gives the team
+	NASA Physical Sciences Informatics system
+	NASA's archive of physical science experiments from the Space Station, including combustion investigations, with data and documents
+	NASA Open Science Data Repository
+	NASA's wider open archive for space biology and physical sciences
+	NASA Technical Reports Server
+	Reports and papers on Saffire, BASS, FLEX and other fire experiments, free to read
+	NASA Glenn Research Center combustion pages
+	Plain descriptions of each experiment and its results
+	NASA Space Station research results pages
+	Short summaries of what each investigation found
+	NASA Image and Video Library
+	Photos and videos of flames in microgravity for the dashboard
+	NASA-STD-6001, the flammability test standard
+	How NASA tests whether a material is safe to fly, useful for the "interpret" step
+	JAXA, a partner agency this year, has also run solid-fuel fire experiments on the Space Station. Its results may appear in the official list.
+AI building blocks
+Need
+	Typical approach
+	Answers tied to sources
+	Retrieval: find the relevant passages first, then have the AI answer only from them
+	Finding related text
+	Text embeddings and a small vector search
+	Structured facts from papers
+	Have the AI pull out material, oxygen level, gravity and result into a table, then check a sample by hand
+	Ranking
+	A clear score built from those extracted fields, or relevance to the user's question
+	Prepare before the event: each team reads about three experiments in full, so at least one member can tell when the AI is wrong.
+How projects are judged and what gets a team to global level
+Space Apps judges score every project on five criteria. With an AI project, validity decides the result: judges who know combustion will test the tool with a question and check whether the answer is true.
+Criterion
+	Judges ask
+	What it means for this challenge
+	Impact
+	How much difference can this project make?
+	Would a spacecraft designer or safety engineer save time and decide better with it?
+	Creativity
+	How new is the approach?
+	A fresh way to rank and present findings, beyond a chat window
+	Validity
+	Is it scientifically correct?
+	AI outputs match the NASA sources; nothing is invented; accuracy has been tested
+	Relevance
+	Does it answer the challenge?
+	Interactive, AI-powered, built on microgravity combustion data, and it summarises, ranks and interprets for fire safety
+	Presentation
+	How well is it communicated?
+	The demo answers one real fire-safety question from start to finish, with sources shown
+	Only projects that our local judges nominate go forward to Global Judging, where NASA and partner-agency experts review them.
+What separates a global-level project
+* Every claim on screen opens its source in one click.
+* The team reports a simple accuracy test, such as "18 of 20 test questions answered correctly".
+* Rankings are explained and can be changed by the user.
+* Insights speak to real decisions for Moon and Mars missions.
+* The tool admits what it does not know.
+Common mistakes to avoid
+* A chatbot with a space theme. A general AI model answering from its own memory uses no NASA combustion data and often gets details wrong.
+* No sources. Answers without links to the NASA record cannot be trusted or checked.
+* Invented findings. AI models can produce confident, false results, including made-up experiment names and numbers. Tying answers to retrieved text is the defence.
+* Summaries only. Leaving out ranking and interpretation covers a third of the challenge.
+* Hidden ranking. A ranked list with no stated rule looks arbitrary.
+* A fire simulation or game. Interesting, but it is not what this challenge asks for.
+* Earth thinking. Assuming flames rise or smoke goes up leads to wrong interpretations.
+* Too much data. Trying to process every NASA paper will not finish. A small, well-chosen set is enough.
+* A demo that depends on luck. A live call to a paid AI service can fail or run out of credit in front of the judges.
+* Nobody checking the AI. At least one team member must read the sources and verify a sample of outputs.
+* AI use not declared. This project is built on AI, so the tools used must be stated as the rules require.
+Mentor guide
+A mentor's job here is to keep the AI honest and to make sure the tool ends in fire-safety insight, not only in summaries. Mentors guide with questions; they do not build the project.
+Questions to ask every team
+* Which NASA records and papers are in your collection? How many?
+* When the AI answers, where does the answer come from? Show me the source.
+* What stops the AI from inventing a result?
+* What do you rank, and by what rule?
+* Give me one insight from your tool. What should a spacecraft designer do because of it?
+* How did you test whether the AI is right? What was the result?
+* What does the tool say when the data does not cover the question?
+* Will the demo still work if the AI service is slow or unavailable?
+Checkpoints
+When
+	Team should have
+	Mentor checks
+	Before the event
+	Full statement and official data list read; a few experiments studied in full; AI tools chosen and tried
+	Team can explain summarise, rank and interpret in their own words
+	Day 1, first 2 to 3 hours
+	Document set chosen; fields for organising it fixed; main user and screen sketch decided
+	The set is small and real
+	Day 1, afternoon
+	Documents loaded; retrieval working; first sourced summaries produced
+	Answers come from the documents, with links
+	End of Day 1
+	One question answered end to end: sources found, summary, ranked list, insight
+	All three jobs exist
+	Day 2, morning
+	Dashboard built; accuracy tested on a set of known questions; errors fixed
+	Team reports the test result honestly
+	Last 3 to 4 hours
+	Project page text, AI tools declared, sources listed, demo prepared with saved outputs, links tested
+	Tool opens from a public link without login or a private key
+	Student checklist before submission
+* ☐ We can explain the challenge objective in one sentence.
+* ☐ Our dashboard is built on real NASA microgravity combustion records, and we list them.
+* ☐ AI does real work in the tool, and we say which AI tools we used.
+* ☐ The tool summarises findings.
+* ☐ The tool ranks findings, and the ranking rule is visible.
+* ☐ The tool interprets findings as fire-safety insights for crewed missions.
+* ☐ Every AI answer links to the NASA source it came from.
+* ☐ We tested the AI on questions with known answers and report the result.
+* ☐ The tool says so when it has no data for a question.
+* ☐ The dashboard is interactive and opens from a public link with no login or private key; our code link is public.
+* ☐ We submitted before the deadline.
+Open items to confirm
+The challenge summary, difficulty and tags in this brief match NASA's published summary as shown on a Space Apps local host's site. Four things remain open.
+* ☐ Full statement: done 12 November (see "What NASA's full statement adds"). Still to do: add NASA's official data list when it is published on 13 November.
+* ☐ The dataset: partly done. NASA names its Physical Science Informatics (PSI) database; the exact resource links come on 13 November.
+* ☐ AI rules: done. NASA calls these SI tools. Teams may use them, and must describe how in their submission.
+* ☐ 2026 rules: NASA publishes the Judging & Awards Guide and the Project Submission Guide on 13 November. Confirmed so far: there are 10 global awards, and every submission must describe how SI (AI) tools were used.
+Sources
+* Official challenge page (full statement read 12 November 2026)
+* 2026 Challenges, NASA Space Apps Challenge UAE: NASA's summary, difficulty and subject tags for all 14 challenges, as shown by a local host
+* Registration is Now Open for the 2026 NASA Space Apps Challenge, NASA announcement reposted by Astrobiology.com: key dates and partner agencies
+* Space Apps Judging & Awards Guide: judging criteria from a past edition

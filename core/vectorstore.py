@@ -185,6 +185,32 @@ class VectorStore:
 
         return hits
 
+    def get_documents_by_source(self, source_name: str) -> list[dict[str, Any]]:
+        """Retrieve all documents matching a specific source file, ordered by chunk_index."""
+        docs: list[dict[str, Any]] = []
+        if self._use_chroma and self._collection is not None:
+            try:
+                res = self._collection.get(where={"source": source_name})
+                documents = res.get("documents", [])
+                metadatas = res.get("metadatas", [])
+                for d, m in zip(documents, metadatas):
+                    docs.append({"text": d, "metadata": m, "score": 1.0})
+            except Exception as e:
+                logger.warning("ChromaDB get_documents_by_source failed: %s", e)
+
+        if not docs and self._fallback_docs:
+            for item in self._fallback_docs:
+                if item.get("metadata", {}).get("source") == source_name:
+                    docs.append({
+                        "text": item.get("text", ""),
+                        "metadata": item.get("metadata", {}),
+                        "score": 1.0,
+                    })
+
+        # Sort sequentially by chunk_index
+        docs.sort(key=lambda x: x.get("metadata", {}).get("chunk_index", 0))
+        return docs
+
     def get_collection_stats(self) -> dict[str, Any]:
         """Return basic statistics about the stored documents."""
         count = self._collection.count() if (self._use_chroma and self._collection) else len(self._fallback_docs)

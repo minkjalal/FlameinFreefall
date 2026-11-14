@@ -1,0 +1,82 @@
+[
+  {
+    "id": "brief-1-overview",
+    "name": "Challenge Brief: Overview & At a Glance (Google Doc 1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U)",
+    "title": "NASA Space Apps Challenge Brief - Overview & Parameters",
+    "url": "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit",
+    "category": "Challenge Overview",
+    "description": "Challenge: Flame in Freefall: AI-Powered Fire Safety Insights from Microgravity Combustion Data. Difficulty: Advanced and Intermediate. Subject Tags: Space Exploration. Target Audience: Professors, graduate and undergraduate students, aerospace researchers and engineers.",
+    "key_findings": [
+      "Hackathon Dates: 14 to 15 November 2026; Judging begins 16 November 2026.",
+      "Official title now uses 'SI' (Super Intelligence) for AI (SI-Powered Fire Safety Insights).",
+      "Data Source: NASA Physical Sciences Informatics (PSI) database of low-gravity combustion results.",
+      "Lunar habitats & pressurized rovers use 30% oxygen or higher at about 10.2 psi (70 kPa) or less, dramatically elevating material flammability.",
+      "Spacesuits operate at 100% pure oxygen at 4.3 psi (30 kPa).",
+      "Rocket and propellant combustion fires are strictly OUT of scope."
+    ]
+  },
+  {
+    "id": "brief-2-jobs",
+    "name": "Challenge Brief: Three Mandatory Core AI Jobs (Google Doc 1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U)",
+    "title": "NASA Space Apps Challenge Brief - Three Mandatory AI Jobs",
+    "url": "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit",
+    "category": "Core Deliverable Objectives",
+    "description": "The deliverable dashboard must perform three distinct AI/SI jobs: Summarise, Rank, and Interpret. Most teams only summarise; a winning project implements all three.",
+    "key_findings": [
+      "Job 1: Summarise - Turn long experiment records or technical papers into concise, scientifically accurate accounts preserving technical depth.",
+      "Job 2: Rank - Order findings by a clear, transparent, user-visible rule (e.g., ranked by fire risk, relevance to query, or strength of experimental evidence).",
+      "Job 3: Interpret - State what the combustion science finding means for operational fire safety and material selection on crewed spacecraft, lunar bases, or Martian habitats."
+    ],
+    "safety_implications": [
+      "Example interpretation: 'For a Moon habitat with 30% oxygen at 10.2 psi, this material requires active thermal barrier protection.'",
+      "Interpretation must translate physical sciences data into actionable guidance for spacecraft designers and astronaut crews."
+    ]
+  },
+  {
+    "id": "brief-3-requirements",
+    "name": "Challenge Brief: Technical Requirements & Smallest Complete Project (Google Doc 1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U)",
+    "title": "NASA Space Apps Challenge Brief - Technical Requirements",
+    "url": "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit",
+    "category": "Technical Architecture Requirements",
+    "description": "Technical rules and minimum scope defined in the official Challenge Brief document.",
+    "key_findings": [
+      "Interactive Dashboard: User must be able to search, filter, query, and compare experiments side-by-side (a fixed report or static page is not a dashboard).",
+      "AI-Powered: AI must perform active, real work in the tool (summarising, ranking, interpreting), not sit beside it as a generic decorative chatbot.",
+      "Human Spaceflight Focus: The end product must deliver practical fire-safety lessons for crewed missions, not a passive library catalogue.",
+      "Smallest Complete Project: 20 to 50 real NASA experiment records or papers organised by material, oxygen level, gravity level, and airflow; interactive search and filters; AI summary linked to source; ranked list; and habitat safety insight.",
+      "The Cardinal Rule: Every summary, ranking, and insight MUST be traceable to a NASA source the user can open in one click ('Trust is the product')."
+    ]
+  },
+  {
+    "id": "brief-4-physics",
+    "name": "Challenge Brief: Combustion Physics & Benchmark Variables (Google Doc 1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U)",
+    "title": "NASA Space Apps Challenge Brief - Microgravity Combustion Physics",
+    "url": "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit",
+    "category": "Combustion Physics Benchmarks",
+    "description": "Fundamental physical differences between Earth (1g) and microgravity (0g) combustion identified in NASA research.",
+    "key_findings": [
+      "Flame Structure: Earth flames are tall, yellow, and point upward due to buoyant convection; microgravity flames are round, blue, spherical, and dim, making them hard to detect visually.",
+      "Oxidizer Delivery: On Earth, hot air rising feeds the fire; in 0g, oxygen delivery relies entirely on cabin forced ventilation airflow or slow molecular diffusion.",
+      "Ventilation Control: Cabin air flow from circulation fans controls flame spread direction; emergency fan shutdown is the primary containment countermeasure to starve flames.",
+      "Smoke Dynamics: Smoke rises to the ceiling on Earth; in microgravity, smoke drifts with air currents; smoke detectors must be positioned inside ventilation return ducts.",
+      "Cool Flames: In microgravity, droplet fuels (FLEX/FLEX-2) can sustain low-temperature, quasi-steady 'cool flame' burning after hot flame extinction; fires that appear extinguished may still burn invisibly.",
+      "Flammability Inversion: Materials safe in normal gravity on Earth can burn more easily in microgravity under gentle forced airflows."
+    ]
+  },
+  {
+    "id": "brief-5-judging",
+    "name": "Challenge Brief: Judging Criteria & Global Award Separation (Google Doc 1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U)",
+    "title": "NASA Space Apps Challenge Brief - Judging & Awards",
+    "url": "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit",
+    "category": "Judging Criteria & Awards",
+    "description": "Five official judging criteria scored by NASA and partner-agency experts to select Global Nominees.",
+    "key_findings": [
+      "Impact: Evaluates whether spacecraft designers or safety engineers save time and make superior safety decisions using the dashboard.",
+      "Creativity: Evaluates fresh approaches to ranking, visual comparisons (e.g., radar charts, entity graphs), and user interaction beyond a simple chat window.",
+      "Validity: Scientific correctness; outputs must strictly match NASA sources with zero invented or hallucinated facts.",
+      "Relevance: Directly addresses the challenge by implementing all three jobs (summarise, rank, interpret) on NASA microgravity combustion data.",
+      "Presentation: Clear, compelling end-to-end communication with transparent data provenance.",
+      "Global Winners Separation: 1-click source links on every claim; published accuracy test results; transparent user-adjustable ranking rules; actionable Moon/Mars insights; and transparent admission of data gaps ('no data found')."
+    ]
+  }
+]

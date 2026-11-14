@@ -47,8 +47,20 @@ class RAGPipeline:
             return routed_response
 
         # ── Layer 2: Domain RAG Pipeline (Combustion Science Retrieval) ──────────
-        # Step 1 – Vector search
-        search_results = self.vectorstore.search(user_question, top_k=top_k)
+        # Step 1 – Vector search (expand top_k for exhaustive challenge brief queries)
+        is_brief_query = any(term in user_question.lower() for term in [
+            "1gnufsb96", "challenge brief", "challenge_brief", "docs.google.com", "challenge document", "brief"
+        ])
+        effective_top_k = max(top_k, 12) if is_brief_query else top_k
+        search_results = self.vectorstore.search(user_question, top_k=effective_top_k)
+
+        if is_brief_query:
+            # Guarantee that ALL chunks of challenge_brief.json are supplied for exhaustive extraction
+            brief_chunks = self.vectorstore.get_documents_by_source("challenge_brief.json")
+            if brief_chunks:
+                seen_texts = {b["text"] for b in brief_chunks}
+                other_results = [r for r in search_results if r["text"] not in seen_texts]
+                search_results = brief_chunks + other_results
 
         # Step 2 – Knowledge graph
         kg_subgraph = self._query_knowledge_graph(user_question)
@@ -228,7 +240,9 @@ class RAGPipeline:
             return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
         if any(w in combined for w in ["guideline", "safety", "protocol", "habitat"]):
             return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
-        return "No URL provided"
+        if any(w in combined for w in ["1gnufsb96", "challenge_brief", "challenge brief", "brief"]):
+            return "https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit"
+        return "Exact URL not provided in database"
 
     @staticmethod
     def _format_vector_results(results: list[dict[str, Any]]) -> str:

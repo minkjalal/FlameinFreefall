@@ -766,6 +766,9 @@
             if (str.includes('material') || str.includes('polymer') || str.includes('guideline') || str.includes('safety') || str.includes('std')) {
                 return 'https://standards.nasa.gov/standard/nasa/nasa-std-6001';
             }
+            if (str.includes('brief') || str.includes('1gnufsb96') || str.includes('google doc')) {
+                return 'https://docs.google.com/document/d/1gnuFsb96_K2457aZGRiJVGeAuKk-xj8Zh7okbYMtC0U/edit';
+            }
             return null;
         }
 

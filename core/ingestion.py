@@ -139,6 +139,19 @@ def _extract_text(record: dict) -> str:
         else:
             parts.append(f"{key.replace('_', ' ').title()}: {val}")
 
+    # Extract any remaining custom keys (e.g. guidelines, full_text, requirements)
+    handled_keys = set(["name", "title", "id"] + simple_keys + structured_keys)
+    for key, val in record.items():
+        if key in handled_keys or not val:
+            continue
+        if isinstance(val, list):
+            items = [_flatten_item(item) for item in val]
+            parts.append(f"{key.replace('_', ' ').title()}:\n" + "\n".join(f"- {i}" for i in items))
+        elif isinstance(val, dict):
+            parts.append(f"{key.replace('_', ' ').title()}: {_flatten_item(val)}")
+        else:
+            parts.append(f"{key.replace('_', ' ').title()}: {val}")
+
     return "\n\n".join(parts)
 
 

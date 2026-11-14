@@ -130,9 +130,9 @@ class GeminiClient:
         headers = {"Content-Type": "application/json"}
         payload = {
             "contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": 0.3, "maxOutputTokens": 1024}
+            "generationConfig": {"temperature": 0.3, "maxOutputTokens": 4096}
         }
-        resp = requests.post(url, headers=headers, json=payload, timeout=25)
+        resp = requests.post(url, headers=headers, json=payload, timeout=60)
         if resp.status_code == 200:
             data = resp.json()
             candidates = data.get("candidates", [])
@@ -153,13 +153,13 @@ class GeminiClient:
         }
         payload = {
             "model": "google/gemini-2.5-flash",
-            "max_tokens": 1024,
+            "max_tokens": 4096,
             "temperature": 0.3,
             "messages": [
                 {"role": "user", "content": prompt}
             ],
         }
-        resp = requests.post(url, headers=headers, json=payload, timeout=30)
+        resp = requests.post(url, headers=headers, json=payload, timeout=60)
         if resp.status_code == 200:
             data = resp.json()
             return data["choices"][0]["message"]["content"]
