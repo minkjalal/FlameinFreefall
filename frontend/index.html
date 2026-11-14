@@ -755,7 +755,7 @@
 
         // Resolves authentic NASA database links for sources
         function resolveSourceUrl(s) {
-            if (typeof s === 'object' && s !== null && s.url) return s.url;
+            if (typeof s === 'object' && s !== null && s.url && s.url.startsWith('http')) return s.url;
             const str = (typeof s === 'object' && s !== null ? s.title || '' : s || '').toLowerCase();
             if (str.includes('bass')) return 'https://psi.nasa.gov/investigation/BASS';
             if (str.includes('acme')) return 'https://psi.nasa.gov/investigation/ACME';
@@ -766,7 +766,7 @@
             if (str.includes('material') || str.includes('polymer') || str.includes('guideline') || str.includes('safety') || str.includes('std')) {
                 return 'https://standards.nasa.gov/standard/nasa/nasa-std-6001';
             }
-            return 'https://psi.nasa.gov';
+            return null;
         }
 
         // State
@@ -1240,10 +1240,16 @@
                            ${data.sources.map(s => {
                                const title = typeof s === 'object' && s !== null ? s.title : s;
                                const url = resolveSourceUrl(s);
-                               return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-all">
-                                         <span>${title}</span>
-                                         <span class="material-symbols-outlined text-[11px]">open_in_new</span>
-                                       </a>`;
+                               if (url) {
+                                   return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/20 px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-all">
+                                             <span>${title}</span>
+                                             <span class="material-symbols-outlined text-[11px]">open_in_new</span>
+                                           </a>`;
+                               } else {
+                                   return `<span class="inline-flex items-center gap-1 bg-black/5 text-on-surface-variant border border-black/10 px-2.5 py-0.5 rounded-full text-[11px]">
+                                             <span>${title} (Exact URL not provided in database)</span>
+                                           </span>`;
+                               }
                            }).join('')}
                          </div>
                        </div>` 

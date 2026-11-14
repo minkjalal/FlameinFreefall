@@ -210,7 +210,7 @@ class RAGPipeline:
 
     @staticmethod
     def get_source_url(name: str = "", source: str = "") -> str:
-        """Resolve an authentic NASA URL for an experiment or dataset."""
+        """Resolve an authentic, precise deep-link URL for an experiment or dataset."""
         combined = f"{name} {source}".lower()
         if "bass" in combined:
             return "https://psi.nasa.gov/investigation/BASS"
@@ -224,36 +224,34 @@ class RAGPipeline:
             return "https://psi.nasa.gov/investigation/SoFIE"
         if "spice" in combined:
             return "https://psi.nasa.gov/investigation/SPICE"
-        if "material" in combined or "polymer" in combined or "acrylic" in combined or "nomex" in combined or "teflon" in combined:
+        if any(w in combined for w in ["material", "polymer", "acrylic", "nomex", "teflon", "kapton", "flammability", "nasa-std-6001", "std-6001"]):
             return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
-        if "safety" in combined or "guideline" in combined:
+        if any(w in combined for w in ["guideline", "safety", "protocol", "habitat"]):
             return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
-        return "https://psi.nasa.gov"
+        return "No URL provided"
 
     @staticmethod
     def _format_vector_results(results: list[dict[str, Any]]) -> str:
-        """Format vector search results into a context string."""
+        """Format vector search results into the exact structured context format for the LLM."""
         if not results:
             return ""
 
-        parts: list[str] = ["## Retrieved Research Data"]
-        for i, r in enumerate(results, 1):
-            meta = r.get("metadata", {})
-            score = r.get("score")
-            exp_name = meta.get("experiment_name", "NASA Combustion Record")
-            url = RAGPipeline.get_source_url(exp_name, meta.get("source", ""))
-            header = f"### Source {i}"
-            if exp_name:
-                header += f" — {exp_name}"
-            if score is not None:
-                header += f" (relevance: {score:.2f})"
-            if url:
-                header += f" | NASA Reference Link: [{exp_name}]({url})"
-            parts.append(header)
-            parts.append(r["text"])
-            parts.append("")
+        formatted_context = "## Retrieved NASA Research Chunks:\n\n"
+        for doc in results:
+            meta = doc.get("metadata", {})
+            title = meta.get("experiment_name") or meta.get("title") or "Unknown Source"
+            source_file = meta.get("source", "").replace(".json", "").replace("_", " ").title()
+            if source_file and source_file.lower() not in title.lower():
+                full_title = f"{title} ({source_file})"
+            else:
+                full_title = title
 
-        return "\n".join(parts)
+            url = meta.get("url") or RAGPipeline.get_source_url(full_title, meta.get("source", ""))
+            content = doc.get("text", "").strip()
+
+            formatted_context += f"Source Title: {full_title}\nSource URL: {url}\nContent: {content}\n\n"
+
+        return formatted_context.strip()
 
     @staticmethod
     def _combine_context(vs_context: str, kg_context: str) -> str:
