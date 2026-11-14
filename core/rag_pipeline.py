@@ -209,6 +209,28 @@ class RAGPipeline:
         return combined if combined.number_of_nodes() > 0 else None
 
     @staticmethod
+    def get_source_url(name: str = "", source: str = "") -> str:
+        """Resolve an authentic NASA URL for an experiment or dataset."""
+        combined = f"{name} {source}".lower()
+        if "bass" in combined:
+            return "https://psi.nasa.gov/investigation/BASS"
+        if "acme" in combined:
+            return "https://psi.nasa.gov/investigation/ACME"
+        if "saffire" in combined:
+            return "https://ntrs.nasa.gov/citations/20160005234"
+        if "flex" in combined:
+            return "https://psi.nasa.gov/investigation/FLEX"
+        if "sofie" in combined:
+            return "https://psi.nasa.gov/investigation/SoFIE"
+        if "spice" in combined:
+            return "https://psi.nasa.gov/investigation/SPICE"
+        if "material" in combined or "polymer" in combined or "acrylic" in combined or "nomex" in combined or "teflon" in combined:
+            return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
+        if "safety" in combined or "guideline" in combined:
+            return "https://standards.nasa.gov/standard/nasa/nasa-std-6001"
+        return "https://psi.nasa.gov"
+
+    @staticmethod
     def _format_vector_results(results: list[dict[str, Any]]) -> str:
         """Format vector search results into a context string."""
         if not results:
@@ -218,11 +240,15 @@ class RAGPipeline:
         for i, r in enumerate(results, 1):
             meta = r.get("metadata", {})
             score = r.get("score")
+            exp_name = meta.get("experiment_name", "NASA Combustion Record")
+            url = RAGPipeline.get_source_url(exp_name, meta.get("source", ""))
             header = f"### Source {i}"
-            if meta.get("experiment_name"):
-                header += f" — {meta['experiment_name']}"
+            if exp_name:
+                header += f" — {exp_name}"
             if score is not None:
                 header += f" (relevance: {score:.2f})"
+            if url:
+                header += f" | NASA Reference Link: [{exp_name}]({url})"
             parts.append(header)
             parts.append(r["text"])
             parts.append("")
@@ -236,18 +262,19 @@ class RAGPipeline:
         return "\n\n".join(sections) if sections else "No relevant context found in the database."
 
     @staticmethod
-    def _extract_sources(results: list[dict[str, Any]]) -> list[str]:
-        """Pull unique source titles out of search results."""
-        sources: list[str] = []
+    def _extract_sources(results: list[dict[str, Any]]) -> list[dict[str, str]]:
+        """Pull unique source titles and URLs out of search results."""
+        sources: list[dict[str, str]] = []
         seen: set[str] = set()
         for r in results:
             meta = r.get("metadata", {})
             name = meta.get("experiment_name", "NASA Combustion Record")
             source_file = meta.get("source", "").replace(".json", "").replace("_", " ").title()
             label = f"{name} ({source_file})" if source_file else name
+            url = RAGPipeline.get_source_url(name, meta.get("source", ""))
             if label not in seen and name != "unknown":
                 seen.add(label)
-                sources.append(label)
+                sources.append({"title": label, "url": url})
         return sources
 
 

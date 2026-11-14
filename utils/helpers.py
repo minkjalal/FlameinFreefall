@@ -67,8 +67,13 @@ def format_percentage(value: float | int | None) -> str:
     return f"{value:.1f}%"
 
 
-def clean_markdown_text(text: str) -> str:
-    """Clean markdown artifacts (**, *, ##, //, backticks) for display in Tkinter UI."""
+def clean_markdown_text(text: str, keep_markdown: bool = True) -> str:
+    """Clean markdown artifacts for UI display.
+    
+    If keep_markdown is True (default for Web UI), preserves standard Markdown
+    syntax including [Link](URL), bold, italics, and headers, while removing
+    internal comments and system debug notes.
+    """
     if not text:
         return ""
 
@@ -78,25 +83,18 @@ def clean_markdown_text(text: str) -> str:
     for raw_line in text.split("\n"):
         line = raw_line.strip()
 
-        # Remove header markers (###, ##, #)
-        line = re.sub(r"^#{1,6}\s+", "", line)
-
-        # Remove bullet artifacts like '• ##' or '• ###'
-        line = re.sub(r"^[•\-\*]\s*#{1,6}\s*", "• ", line)
-
         # Remove comments like '// ...'
         if line.startswith("//"):
             continue
 
-        # Remove bold **text** -> text
-        line = re.sub(r"\*\*(.*?)\*\*", r"\1", line)
-
-        # Remove italics *text* or _text_ -> text
-        line = re.sub(r"(?<!\*)\*([^\*\s][^\*]*?)\*(?!\*)", r"\1", line)
-        line = re.sub(r"(?<!_)_([^_\s][^_]*?)_(?!_)", r"\1", line)
-
-        # Remove backticks `code` -> code
-        line = re.sub(r"`([^`]+)`", r"\1", line)
+        if not keep_markdown:
+            # Strip markdown formatting for legacy Tkinter UI
+            line = re.sub(r"^#{1,6}\s+", "", line)
+            line = re.sub(r"^[•\-\*]\s*#{1,6}\s*", "• ", line)
+            line = re.sub(r"\*\*(.*?)\*\*", r"\1", line)
+            line = re.sub(r"(?<!\*)\*([^\*\s][^\*]*?)\*(?!\*)", r"\1", line)
+            line = re.sub(r"(?<!_)_([^_\s][^_]*?)_(?!_)", r"\1", line)
+            line = re.sub(r"`([^`]+)`", r"\1", line)
 
         # Clean footer note about API key to a subtle clean notice
         if "Running with local RAG knowledge grounding" in line:
