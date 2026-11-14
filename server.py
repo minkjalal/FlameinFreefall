@@ -312,3 +312,10 @@ if os.path.exists(FRONTEND_DIR):
     @app.get("/sw.js")
     def serve_sw():
         return FileResponse(os.path.join(FRONTEND_DIR, "sw.js"))
+
+
+if __name__ == "__main__":
+    import uvicorn
+    print("[OK] Starting Flame in Freefall on http://localhost:8000 ...")
+    uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=False)
+

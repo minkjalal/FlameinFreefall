@@ -6,6 +6,7 @@ with fallback to HTTP REST requests and intelligent offline grounding.
 
 import json
 import logging
+import os
 from typing import Generator, Optional
 
 try:
@@ -21,37 +22,49 @@ try:
 except ImportError:
     HAS_REQUESTS = False
 
-from config import GEMINI_API_KEY, GEMINI_MODEL, EMBEDDING_MODEL, SYSTEM_PROMPT
+from config import GEMINI_API_KEY, OPENROUTER_API_KEY, GEMINI_MODEL, EMBEDDING_MODEL, SYSTEM_PROMPT
 
 logger = logging.getLogger(__name__)
 
 
 class GeminiClient:
-    """Wrapper around Google Gemini API (via SDK or REST) for text generation."""
+    """Wrapper around Google Gemini API (via OpenRouter, SDK or REST) for text generation."""
 
     def __init__(self, api_key: str | None = None):
         self.api_key = api_key or GEMINI_API_KEY
+        self.openrouter_key = os.getenv("OPENROUTER_API_KEY") or OPENROUTER_API_KEY
         self._configured = False
+        self._provider = "local"
         self._model = None
         self._embedding_model_name = EMBEDDING_MODEL
 
-        if self.api_key and self.api_key != "your_gemini_api_key_here":
+        # 1. OpenRouter Provider (Priority if key present or starts with sk-or-v1-)
+        active_key = self.openrouter_key or self.api_key
+        if active_key and (active_key.startswith("sk-or-v1-") or "openrouter" in active_key.lower()):
+            self.openrouter_key = active_key
+            self._provider = "openrouter"
+            self._configured = True
+            logger.info("Client configured with OpenRouter using model google/gemini-2.5-flash")
+        elif self.api_key and self.api_key != "your_gemini_api_key_here":
             if HAS_GENAI:
                 try:
                     genai.configure(api_key=self.api_key)
                     self._model = genai.GenerativeModel(GEMINI_MODEL)
+                    self._provider = "sdk"
                     self._configured = True
                     logger.info("Gemini client configured with SDK using model %s", GEMINI_MODEL)
                 except Exception as e:
                     logger.warning("SDK configuration failed: %s; will use REST if available", e)
                     self._configured = HAS_REQUESTS
+                    self._provider = "rest" if HAS_REQUESTS else "local"
             elif HAS_REQUESTS:
                 self._configured = True
+                self._provider = "rest"
                 logger.info("Gemini client configured with REST API using model %s", GEMINI_MODEL)
             else:
                 self._configured = False
         else:
-            logger.info("Running in offline/local knowledge mode (no GEMINI_API_KEY set).")
+            logger.info("Running in offline/local knowledge mode (no active API key set).")
             self._configured = False
 
     @property
@@ -64,10 +77,20 @@ class GeminiClient:
     def generate_response(
         self, prompt: str, context: Optional[str] = None, stream: bool = True
     ) -> str | Generator[str, None, None]:
-        """Generate a response from Gemini, grounded in microgravity combustion data."""
+        """Generate a response from Gemini/OpenRouter, grounded in microgravity combustion data."""
         full_prompt = self._build_prompt(prompt, context)
 
-        # 1. Try SDK if available and configured
+        # 1. Try OpenRouter if configured
+        if self._configured and (self._provider == "openrouter" or (self.api_key and self.api_key.startswith("sk-or-v1-"))):
+            try:
+                res_text = self._call_openrouter_api(full_prompt)
+                if stream:
+                    return (chunk for chunk in [res_text])
+                return res_text
+            except Exception as e:
+                logger.warning("OpenRouter generation error (%s), trying fallbacks", e)
+
+        # 2. Try SDK if available and configured
         if self._configured and HAS_GENAI and self._model is not None:
             try:
                 if stream:
@@ -78,8 +101,8 @@ class GeminiClient:
             except Exception as e:
                 logger.warning("SDK generation error (%s), trying REST fallback", e)
 
-        # 2. Try REST API if configured and requests is available
-        if self._configured and HAS_REQUESTS and self.api_key:
+        # 3. Try REST API if configured and requests is available
+        if self._configured and HAS_REQUESTS and self.api_key and not self.api_key.startswith("sk-or-v1-"):
             try:
                 res_text = self._call_rest_api(full_prompt)
                 if stream:
@@ -88,7 +111,7 @@ class GeminiClient:
             except Exception as e:
                 logger.error("REST generation error: %s", e)
 
-        # 3. Intelligent offline response based on RAG context
+        # 4. Intelligent offline response based on RAG context
         offline_ans = self._generate_offline_grounded_response(prompt, context)
         if stream:
             return (chunk for chunk in [offline_ans])
@@ -117,6 +140,30 @@ class GeminiClient:
                 parts = candidates[0].get("content", {}).get("parts", [])
                 return "".join(p.get("text", "") for p in parts)
         raise RuntimeError(f"REST API call failed with status {resp.status_code}: {resp.text}")
+
+    def _call_openrouter_api(self, prompt: str) -> str:
+        """Call OpenRouter API with google/gemini-2.5-flash."""
+        key = self.openrouter_key or self.api_key
+        url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "http://localhost:8000",
+            "X-Title": "Flame in Freefall",
+        }
+        payload = {
+            "model": "google/gemini-2.5-flash",
+            "max_tokens": 1024,
+            "temperature": 0.3,
+            "messages": [
+                {"role": "user", "content": prompt}
+            ],
+        }
+        resp = requests.post(url, headers=headers, json=payload, timeout=30)
+        if resp.status_code == 200:
+            data = resp.json()
+            return data["choices"][0]["message"]["content"]
+        raise RuntimeError(f"OpenRouter API call failed with status {resp.status_code}: {resp.text}")
 
     def _generate_offline_grounded_response(self, prompt: str, context: Optional[str]) -> str:
         """Provide a clean, readable response grounded in the retrieved NASA context."""
@@ -175,16 +222,16 @@ class GeminiClient:
 
     def _build_prompt(self, prompt: str, context: Optional[str]) -> str:
         """Compose the prompt with system instructions and retrieved context."""
-        parts = [SYSTEM_PROMPT, "\n---\n"]
-        if context:
+        parts = [SYSTEM_PROMPT, "\n\n---\n"]
+        if context and context.strip():
             parts.extend([
-                "### RETRIEVED NASA RESEARCH DATA & CONTEXT:\n",
+                "### RETRIEVED NASA RESEARCH DATA & CONTEXT (FOR IN-SCOPE QUERIES ONLY):\n",
                 context,
-                "\n---\n",
+                "\n\n---\n",
             ])
         parts.extend([
             "### USER QUERY:\n",
             prompt,
-            "\n\n### SCIENTIFIC ANSWER:\n",
+            "\n\n### RESPONSE (Adhere strictly to the Out-of-Scope Query Protocol if the query is unrelated to core domain):\n",
         ])
         return "".join(parts)
