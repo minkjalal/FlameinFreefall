@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+    <title>Flame in Freefall — NASA Fire Safety Intelligence</title>
+    <meta name="description" content="AI-Powered Fire Safety Insights from Microgravity Combustion Data — NASA Space Apps Challenge 2026">
+    <meta name="theme-color" content="#FF5E3A">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Chart.js for sleek charts & radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-shift 15s ease infinite;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Glassmorphism primitives */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.04);
+        }
+        
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+    </style>
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#FF5E3A",
+                        "primary-container": "#ff8a65",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#752305",
+                        "secondary": "#556500",
+                        "secondary-container": "#d6ed7a",
+                        "on-secondary-container": "#5a6c00",
+                        "tertiary": "#326578",
+                        "tertiary-container": "#80b1c7",
+                        "background": "#ffffff",
+                        "surface": "#ffffff",
+                        "surface-dim": "#dfd9cf",
+                        "surface-container-low": "#f9f3e8",
+                        "surface-container": "#f3ede2",
+                        "on-surface": "#000000",
+                        "on-surface-variant": "#555555",
+                        "outline": "#89726b",
+                        "outline-variant": "#ddc0b8",
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "display-xl": ["Plus Jakarta Sans", "sans-serif"],
+                        "headline-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "headline-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "body-lg": ["Plus Jakarta Sans", "sans-serif"],
+                        "body-md": ["Plus Jakarta Sans", "sans-serif"],
+                        "label-caps": ["Plus Jakarta Sans", "sans-serif"],
+                    }
+                }
+            }
+        };
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container"
+      onmousemove="this.style.setProperty('--mouse-x', event.clientX + 'px'); this.style.setProperty('--mouse-y', event.clientY + 'px');">
+
+    <!-- Ambient Dynamic Glow Background -->
+    <div class="fixed inset-0 -z-10 pointer-events-none transition-all duration-700 ease-out" 
+         style="background: radial-gradient(1200px circle at var(--mouse-x, 50%) var(--mouse-y, 30%), rgba(255, 94, 58, 0.08), rgba(79, 70, 229, 0.06), rgba(217, 70, 239, 0.04), transparent 80%), linear-gradient(135deg, rgba(255, 94, 58, 0.04) 0%, rgba(79, 70, 229, 0.03) 50%, rgba(217, 70, 239, 0.02) 100%);">
+    </div>
+
+    <!-- ── TOP NAVIGATION BAR (Matching New Design Strictly at Top) ── -->
+    <nav class="fixed top-4 md:top-6 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl rounded-full border border-white/60 bg-white/50 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.05)] z-50 flex justify-between items-center py-2.5 md:py-3 px-5 md:px-7">
+        
+        <!-- Logo / Brand Emblem -->
+        <a class="flex items-center gap-2.5 cursor-pointer group" onclick="switchTab('dashboard')">
+            <div class="w-8 h-8 md:w-9 md:h-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary group-hover:scale-105 transition-transform shadow-sm">
+                <span class="material-symbols-outlined text-[20px] text-primary">local_fire_department</span>
+            </div>
+            <div class="flex flex-col">
+                <span class="font-display-xl text-base md:text-lg font-bold tracking-tight text-on-surface leading-tight">Flame in Freefall</span>
+                <span class="text-[9px] font-bold text-primary uppercase tracking-widest leading-none">NASA Space Apps</span>
+            </div>
+        </a>
+
+        <!-- Center Nav Items: EXACT nomenclature preserved -->
+        <div class="hidden lg:flex items-center gap-6">
+            <button id="nav-dashboard" class="nav-item text-primary font-bold font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('dashboard')">Dashboard</button>
+            <button id="nav-chat" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('chat')">Chat</button>
+            <button id="nav-explorer" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('explorer')">Explorer</button>
+            <button id="nav-compare" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('compare')">Comparison</button>
+            <button id="nav-safety" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('safety')">Safety & Risk</button>
+            <button id="nav-graph" class="nav-item text-on-surface-variant font-medium hover:text-primary transition-colors font-body-md text-sm scale-95 active:scale-90 transition-all cursor-pointer" onclick="switchTab('graph')">Graph</button>
+        </div>
+
+        <!-- Right Action Items -->
+        <div class="flex items-center gap-3">
+            <div id="engine-status-pill" class="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-container/40 border border-secondary-container text-on-secondary-container text-xs font-semibold">
+                <div class="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse"></div>
+                <span id="engine-status-text">NASA RAG Active</span>
+            </div>
+
+            <button onclick="switchTab('chat')" class="bg-primary hover:bg-primary/90 text-white font-medium text-xs md:text-sm px-4 md:px-5 py-2 rounded-full shadow-sm hover:shadow-md transition-all scale-95 active:scale-90 flex items-center gap-1.5">
+                <span>Ask FlameAI</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </button>
+
+            <!-- Mobile Hamburger Toggle -->
+            <button class="lg:hidden p-1.5 text-on-surface-variant hover:text-primary" onclick="toggleMobileMenu()">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-menu" class="fixed inset-x-4 top-20 bg-white/90 backdrop-blur-2xl border border-white/80 rounded-3xl p-5 shadow-2xl z-40 hidden flex-col gap-3 lg:hidden">
+        <button class="text-left py-2 px-4 rounded-xl font-bold text-primary hover:bg-primary/10" onclick="switchTab('dashboard'); toggleMobileMenu();">Dashboard</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('chat'); toggleMobileMenu();">Chat</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('explorer'); toggleMobileMenu();">Explorer</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('compare'); toggleMobileMenu();">Comparison</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('safety'); toggleMobileMenu();">Safety & Risk</button>
+        <button class="text-left py-2 px-4 rounded-xl font-medium text-on-surface-variant hover:text-primary hover:bg-primary/10" onclick="switchTab('graph'); toggleMobileMenu();">Graph</button>
+    </div>
+
+    <!-- ── MAIN CONTENT CONTAINER ── -->
+    <main class="max-w-[1536px] mx-auto w-full pt-28 md:pt-36 pb-20 px-4 md:px-8">
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 1: DASHBOARD                                                 -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-dashboard" class="tab-view block space-y-16">
+            
+            <!-- Hero Banner -->
+            <div class="relative py-12 md:py-16 px-4 md:px-8 flex flex-col items-center justify-center text-center">
+                <div class="inline-flex items-center gap-2 bg-white/40 backdrop-blur-xl border border-white/60 rounded-full px-4 py-1.5 mb-6 shadow-sm">
+                    <span class="bg-secondary-container text-on-secondary-container font-label-caps text-[11px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">NASA PSI DATA</span>
+                    <span class="font-body-md text-xs md:text-sm text-on-surface font-medium">BASS • ACME • SAFFIRE • SoFIE • FLEX</span>
+                </div>
+
+                <h1 class="font-display-xl text-4xl md:text-6xl lg:text-[68px] leading-[1.1] tracking-tight text-on-surface max-w-4xl font-extrabold mb-5">
+                    Flame in Freefall
+                </h1>
+                
+                <p class="font-body-lg text-base md:text-lg text-on-surface-variant max-w-2xl mb-10 leading-relaxed">
+                    AI-powered fire safety insights and microgravity combustion physics synthesized from decades of NASA spaceflight investigations.
+                </p>
+
+                <!-- Prompt Input Box (Direct Interface from Design) -->
+                <div class="w-full max-w-[840px] bg-white/45 rounded-3xl border border-white/70 shadow-[0_12px_40px_rgba(0,0,0,0.06)] p-5 md:p-6 mb-8 backdrop-blur-xl">
+                    <div class="flex flex-col gap-3">
+                        <textarea id="hero-prompt-input" 
+                                  class="w-full bg-transparent border-none resize-none font-body-lg text-base text-on-surface placeholder:text-outline/70 focus:ring-0 min-h-[70px] outline-none" 
+                                  placeholder="Ask FlameAI anything about microgravity flame behavior, material flammability, or habitat safety..."></textarea>
+                        
+                        <div class="flex items-center justify-between pt-3 border-t border-white/50">
+                            <div class="flex items-center gap-2 md:gap-3">
+                                <button onclick="quickPrompt('Why do flames become spherical in microgravity?')" class="px-3 py-1.5 rounded-full bg-white/50 hover:bg-white text-xs font-semibold text-on-surface-variant transition-colors border border-white/60 shadow-sm">
+                                    Spherical Flame
+                                </button>
+                                <button onclick="quickPrompt('What did SAFFIRE teach us about spacecraft fires?')" class="px-3 py-1.5 rounded-full bg-white/50 hover:bg-white text-xs font-semibold text-on-surface-variant transition-colors border border-white/60 shadow-sm">
+                                    SAFFIRE Tests
+                                </button>
+                            </div>
+                            
+                            <button onclick="handleHeroSubmit()" class="bg-primary hover:bg-primary/90 text-white rounded-full w-11 h-11 flex items-center justify-center shadow-md hover:scale-105 active:scale-95 transition-all">
+                                <span class="material-symbols-outlined text-[20px]">arrow_upward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chips Row -->
+                <div class="flex flex-wrap items-center justify-center gap-2.5">
+                    <button onclick="quickPrompt('Explain the cool-flame regime in FLEX-2')" class="bg-white/40 text-on-surface border border-white/60 shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-white/70 transition-colors backdrop-blur-md">❄️ Cool-Flame Regime</button>
+                    <button onclick="quickPrompt('Fire safety risk of PMMA in lunar 34% O2 atmosphere')" class="bg-white/40 text-on-surface border border-white/60 shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-white/70 transition-colors backdrop-blur-md">🌕 Lunar 34% O₂ Risk</button>
+                    <button onclick="quickPrompt('Why is Nomex safer than cotton in space habitats?')" class="bg-white/40 text-on-surface border border-white/60 shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-white/70 transition-colors backdrop-blur-md">🛡️ Nomex vs Cotton</button>
+                    <button onclick="quickPrompt('Why is cabin ventilation shutdown the first fire protocol?')" class="bg-white/40 text-on-surface border border-white/60 shadow-sm rounded-full px-4 py-1.5 text-xs font-medium hover:bg-white/70 transition-colors backdrop-blur-md">💨 Ventilation Shutdown</button>
+                </div>
+            </div>
+
+            <!-- Operational Metrics Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Ingested Experiments</span>
+                        <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">science</span>
+                        </div>
+                    </div>
+                    <div id="stat-experiments" class="text-4xl font-extrabold text-primary mb-1">12</div>
+                    <p class="text-xs text-on-surface-variant">BASS, ACME, SAFFIRE, FLEX, SoFIE</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Materials Tested</span>
+                        <div class="w-8 h-8 rounded-full bg-tertiary/10 flex items-center justify-center text-tertiary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">category</span>
+                        </div>
+                    </div>
+                    <div id="stat-materials" class="text-4xl font-extrabold text-[#3B82F6] mb-1">10</div>
+                    <p class="text-xs text-on-surface-variant">Polymers, fabrics, composites & fuels</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Key Physics Findings</span>
+                        <div class="w-8 h-8 rounded-full bg-secondary-container/40 flex items-center justify-center text-secondary group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">lightbulb</span>
+                        </div>
+                    </div>
+                    <div id="stat-findings" class="text-4xl font-extrabold text-[#22c55e] mb-1">18</div>
+                    <p class="text-xs text-on-surface-variant">Empirically validated combustion insights</p>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6 hover:shadow-lg transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Safety Protocols</span>
+                        <div class="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-500 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[18px]">verified</span>
+                        </div>
+                    </div>
+                    <div id="stat-guidelines" class="text-4xl font-extrabold text-[#ef4444] mb-1">7</div>
+                    <p class="text-xs text-on-surface-variant">ISS, Lunar (0.16g) & Martian (0.38g) guidelines</p>
+                </div>
+            </div>
+
+            <!-- Two Visual Feature Cards (Matching Section 3 & 4 from design file) -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Feature 01: Chat / Interaction -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[460px]">
+                    <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                        <span class="font-label-caps text-xs text-on-surface-variant font-bold tracking-widest mb-4">FEATURE 01</span>
+                        <h3 class="font-headline-lg text-2xl md:text-3xl font-bold text-on-surface mb-4 leading-snug">
+                            Ask FlameAI: Grounded Graph-RAG Engine
+                        </h3>
+                        <p class="text-sm md:text-base text-on-surface-variant mb-6 leading-relaxed">
+                            Combines dense semantic vector retrieval with NetworkX knowledge graph traversal to provide factual, citation-backed answers from authentic NASA research.
+                        </p>
+                        <button onclick="switchTab('chat')" class="inline-flex items-center gap-2 bg-white/70 border border-white/80 shadow-sm text-on-surface font-medium px-6 py-2.5 rounded-full w-fit hover:bg-white hover:scale-105 transition-all text-sm">
+                            Open Chat Interface
+                            <span class="material-symbols-outlined text-[18px]">chat</span>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 bg-gradient-to-br from-[#3B82F6]/20 via-[#8B5CF6]/15 to-[#EC4899]/20 p-6 flex items-center justify-center relative overflow-hidden border-t md:border-t-0 md:border-l border-white/40">
+                        <div class="w-full bg-white/50 backdrop-blur-xl rounded-2xl border border-white/60 p-4 shadow-lg space-y-3">
+                            <div class="flex items-center gap-2 border-b border-black/5 pb-2">
+                                <div class="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+                                    <span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+                                </div>
+                                <span class="text-xs font-bold text-on-surface">FlameAI Grounded Engine</span>
+                            </div>
+                            <div class="bg-white/60 rounded-xl p-3 text-xs text-on-surface-variant leading-relaxed">
+                                "In microgravity (0g), buoyant convection is eliminated. Flames become spherical, soot aggregate chains grow larger, and ventilation fan shutdown is the primary containment directive."
+                            </div>
+                            <div class="flex items-center justify-between text-[10px] text-on-surface-variant/80 pt-1">
+                                <span>Source: FLEX & BASS-II</span>
+                                <span class="text-primary font-bold">100% Grounded</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 02: Space Telemetry & Safety -->
+                <div class="glass-card rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[460px]">
+                    <div class="p-8 md:p-10 flex-1 flex flex-col justify-center">
+                        <span class="font-label-caps text-xs text-on-surface-variant font-bold tracking-widest mb-4">FEATURE 02</span>
+                        <h3 class="font-headline-lg text-2xl md:text-3xl font-bold text-on-surface mb-4 leading-snug">
+                            Multi-Environment Habitat Fire Risk Scorer
+                        </h3>
+                        <p class="text-sm md:text-base text-on-surface-variant mb-6 leading-relaxed">
+                            Evaluate material flammability shifts across varying gravities and exploration atmospheres (34% O₂ at 56.5 kPa) with automated engineering containment recommendations.
+                        </p>
+                        <button onclick="switchTab('safety')" class="inline-flex items-center gap-2 bg-white/70 border border-white/80 shadow-sm text-on-surface font-medium px-6 py-2.5 rounded-full w-fit hover:bg-white hover:scale-105 transition-all text-sm">
+                            Calculate Risk
+                            <span class="material-symbols-outlined text-[18px]">shield</span>
+                        </button>
+                    </div>
+
+                    <div class="flex-1 bg-gradient-to-br from-[#F97316]/20 via-[#EF4444]/15 to-[#E11D48]/20 p-6 flex items-center justify-center relative overflow-hidden border-t md:border-t-0 md:border-l border-white/40">
+                        <div class="w-full bg-white/60 backdrop-blur-xl rounded-2xl border border-white/70 p-5 shadow-lg space-y-4">
+                            <div class="flex items-center justify-between border-b border-black/5 pb-3">
+                                <div class="flex items-center gap-2">
+                                    <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                        <span class="material-symbols-outlined text-[18px]">speed</span>
+                                    </div>
+                                    <div>
+                                        <span class="block text-xs font-bold text-on-surface">Lunar Habitat Assessment</span>
+                                        <span class="text-[9px] uppercase font-bold text-on-surface-variant">34% O₂ Exploration Mix</span>
+                                    </div>
+                                </div>
+                                <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-600 text-[10px] font-bold">HIGH RISK</span>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-semibold">
+                                    <span>PMMA Plexiglass Flammability</span>
+                                    <span class="text-primary font-bold">Score: 44/100</span>
+                                </div>
+                                <div class="h-1.5 w-full bg-black/5 rounded-full overflow-hidden">
+                                    <div class="h-full bg-primary rounded-full w-[44%]"></div>
+                                </div>
+                            </div>
+                            <div class="text-[11px] text-on-surface-variant flex items-center gap-1.5">
+                                <span class="material-symbols-outlined text-[14px] text-[#22c55e]">check_circle</span>
+                                <span>Re-qualification under NASA STD-6001 required</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="glass-card rounded-3xl p-6 md:p-8">
+                    <h3 class="text-lg font-bold text-on-surface mb-2">Experiments by NASA Program</h3>
+                    <p class="text-xs text-on-surface-variant mb-6">Distribution across Solid, Gaseous, Droplet, and Large-Scale categories</p>
+                    <div class="h-[280px]">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-6 md:p-8">
+                    <h3 class="text-lg font-bold text-on-surface mb-2">Spacecraft Materials Studied</h3>
+                    <p class="text-xs text-on-surface-variant mb-6">Polymers, fabrics, composites, foams, and liquid fuels</p>
+                    <div class="h-[280px]">
+                        <canvas id="materialsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Findings Feed -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-xl font-bold text-on-surface">Empirical Findings Feed</h3>
+                        <p class="text-xs text-on-surface-variant">Published microgravity combustion observations from ISS & Cygnus missions</p>
+                    </div>
+                    <button onclick="switchTab('explorer')" class="text-xs font-bold text-primary hover:underline flex items-center gap-1">
+                        View All Experiments <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+                    </button>
+                </div>
+
+                <div id="findings-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Populated via API -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 2: CHAT (Graph-RAG)                                           -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-chat" class="tab-view hidden">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="flex items-center justify-between pb-2 border-b border-black/5">
+                    <div>
+                        <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">FlameAI Assistant</h2>
+                        <p class="text-xs md:text-sm text-on-surface-variant">Multi-turn Graph-RAG conversational agent grounded in NASA microgravity combustion repositories</p>
+                    </div>
+                    <button onclick="clearChatMemory()" class="px-4 py-1.5 rounded-full bg-white/60 hover:bg-white text-xs font-semibold text-on-surface-variant border border-white/70 shadow-sm transition-all flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px]">delete</span>
+                        Clear Chat
+                    </button>
+                </div>
+
+                <!-- Chat Box -->
+                <div class="glass-card rounded-3xl p-4 md:p-6 min-h-[550px] flex flex-col justify-between shadow-xl">
+                    <!-- Messages List -->
+                    <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 pr-2 max-h-[520px]">
+                        <!-- Welcome message -->
+                        <div class="flex gap-3">
+                            <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-white/60 flex items-center justify-center text-primary font-bold shadow-sm">
+                                <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                            </div>
+                            <div class="flex-1 bg-white/70 backdrop-blur-md rounded-2xl rounded-tl-none p-4 border border-white/80 shadow-sm text-sm text-on-surface space-y-2">
+                                <p class="font-bold text-primary">FlameAI Operational Intelligence</p>
+                                <p>Welcome! I am specialized in microgravity combustion science and spacecraft fire safety protocols. You can ask me about:</p>
+                                <ul class="list-disc list-inside text-on-surface-variant space-y-1">
+                                    <li>NASA experiments: <b>BASS, ACME, SAFFIRE, FLEX, SoFIE, SPICE</b></li>
+                                    <li>Physics phenomena: <b>flame sphericity, cool flame regimes, soot agglomeration</b></li>
+                                    <li>Material ratings: <b>Nomex, PMMA, silicone, Teflon, Limiting Oxygen Index (LOI)</b></li>
+                                    <li>Habitat safety for <b>ISS (0g), Lunar (0.16g), and Martian (0.38g)</b> modules</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input Bar -->
+                    <div class="pt-4 mt-4 border-t border-white/50">
+                        <div class="flex items-center gap-2 bg-white/70 rounded-full border border-white/90 p-1.5 shadow-md">
+                            <input id="chat-input-field" 
+                                   type="text" 
+                                   class="flex-1 bg-transparent border-none px-4 text-sm text-on-surface focus:ring-0 outline-none" 
+                                   placeholder="Ask FlameAI a question (e.g., Why do flames become spherical in microgravity?)..." 
+                                   onkeydown="if(event.key === 'Enter') sendChatMessage();">
+                            
+                            <button onclick="sendChatMessage()" class="w-10 h-10 rounded-full bg-primary hover:bg-primary/90 text-white flex items-center justify-center shadow-sm transition-transform active:scale-90">
+                                <span class="material-symbols-outlined text-[18px]">send</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 3: EXPLORER                                                  -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-explorer" class="tab-view hidden space-y-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-4 border-b border-black/5">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">NASA Combustion Experiment Explorer</h2>
+                    <p class="text-xs md:text-sm text-on-surface-variant">Browse, filter, and inspect detailed parameters from published flight experiments</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <input id="exp-search-input" 
+                           type="text" 
+                           class="bg-white/60 border border-white/80 rounded-full px-4 py-2 text-xs md:text-sm text-on-surface placeholder:text-outline/70 focus:ring-0 outline-none shadow-sm" 
+                           placeholder="Search experiments..." 
+                           oninput="filterExperiments()">
+
+                    <select id="exp-category-select" 
+                            class="bg-white/60 border border-white/80 rounded-full px-4 py-2 text-xs md:text-sm text-on-surface focus:ring-0 outline-none shadow-sm cursor-pointer" 
+                            onchange="filterExperiments()">
+                        <option value="All Categories">All Categories</option>
+                    </select>
+
+                    <select id="exp-platform-select" 
+                            class="bg-white/60 border border-white/80 rounded-full px-4 py-2 text-xs md:text-sm text-on-surface focus:ring-0 outline-none shadow-sm cursor-pointer" 
+                            onchange="filterExperiments()">
+                        <option value="All Platforms">All Platforms</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Experiments Grid -->
+            <div id="experiments-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 4: COMPARISON                                                -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-compare" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-black/5">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Side-by-Side Experiment Comparison</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">Multi-parametric combustion profile comparison with 5-axis polar radar chart</p>
+            </div>
+
+            <!-- Experiment Selectors -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card rounded-2xl p-4">
+                    <label class="block text-xs font-bold text-primary uppercase tracking-wider mb-2">Experiment 1 (Orange)</label>
+                    <select id="compare-exp1-select" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-0 outline-none" onchange="runComparison()">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+                <div class="glass-card rounded-2xl p-4">
+                    <label class="block text-xs font-bold text-[#3B82F6] uppercase tracking-wider mb-2">Experiment 2 (Blue)</label>
+                    <select id="compare-exp2-select" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-sm font-semibold text-on-surface focus:ring-0 outline-none" onchange="runComparison()">
+                        <!-- Loaded dynamically -->
+                    </select>
+                </div>
+            </div>
+
+            <!-- Chart & Table Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Radar Chart -->
+                <div class="lg:col-span-6 glass-card rounded-3xl p-6 md:p-8 flex flex-col items-center justify-center">
+                    <h3 class="text-base font-bold text-on-surface mb-4">5-Axis Combustion Profile Radar</h3>
+                    <div class="w-full max-w-[420px] aspect-square">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Metrics Table -->
+                <div class="lg:col-span-6 glass-card rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-base font-bold text-on-surface">Metric Scorecard (0 - 10 scale)</h3>
+                    <div id="compare-table-container" class="overflow-x-auto">
+                        <!-- Table rendered via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 5: SAFETY & RISK                                             -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-safety" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-black/5">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Space Habitat Fire Safety Risk Scorer</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">Assess material flammability and risk profiles across microgravity and reduced-gravity environments</p>
+            </div>
+
+            <!-- Inputs Card -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Target Material</label>
+                        <select id="scorer-material" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="Nomex® Blend">Nomex® Blend</option>
+                            <option value="Teflon (PTFE)">Teflon (PTFE)</option>
+                            <option value="Kapton Film">Kapton Film</option>
+                            <option value="Silicone Composite">Silicone Composite</option>
+                            <option value="Epoxy Composite">Epoxy Composite</option>
+                            <option value="PMMA (Acrylic)">PMMA (Acrylic)</option>
+                            <option value="Nylon-6">Nylon-6</option>
+                            <option value="Cotton Fabric">Cotton Fabric</option>
+                            <option value="Polyethylene">Polyethylene</option>
+                            <option value="Velcro® Strips">Velcro® Strips</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Mission Environment</label>
+                        <select id="scorer-env" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="ISS (LEO - Microgravity)">ISS (LEO - 0g)</option>
+                            <option value="Lunar Habitat (0.16g)">Lunar Habitat (0.16g)</option>
+                            <option value="Martian Habitat (0.38g)">Martian Habitat (0.38g)</option>
+                            <option value="Deep-Space Transit">Deep-Space Transit</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Oxygen (O₂) Concentration</label>
+                        <select id="scorer-o2" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-sm text-on-surface focus:ring-0 outline-none">
+                            <option value="16%">16% (Depleted)</option>
+                            <option value="18%">18%</option>
+                            <option value="20.9% (Standard)" selected>20.9% (Standard ISS / Earth)</option>
+                            <option value="24%">24%</option>
+                            <option value="30%">30%</option>
+                            <option value="34% (Exploration)">34% (Exploration Atmosphere)</option>
+                        </select>
+                    </div>
+
+                    <button onclick="calculateSafetyScore()" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-2.5 px-6 rounded-xl shadow-md transition-all active:scale-95 flex items-center justify-center gap-2">
+                        <span class="material-symbols-outlined text-[18px]">search</span>
+                        <span>Analyse Risk</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Risk Calculation Result Card -->
+            <div id="risk-result-container" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- Gauge Card -->
+                <div class="lg:col-span-4 glass-card rounded-3xl p-8 flex flex-col items-center justify-center text-center">
+                    <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Calculated Safety Score</span>
+                    <div id="result-score-val" class="text-7xl font-extrabold text-[#22c55e] my-3">85</div>
+                    <span class="text-xs text-on-surface-variant">Out of 100</span>
+                    <div class="mt-4">
+                        <span id="result-risk-badge" class="px-4 py-1.5 rounded-full text-xs font-extrabold bg-[#22c55e]/20 text-[#22c55e] border border-[#22c55e]/30">LOW RISK</span>
+                    </div>
+                </div>
+
+                <!-- Analysis Details -->
+                <div class="lg:col-span-8 glass-card rounded-3xl p-8 space-y-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-red-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">warning</span>
+                            Key Risk Factors
+                        </h4>
+                        <ul id="result-factors-list" class="text-xs md:text-sm text-on-surface-variant space-y-1.5 list-disc list-inside">
+                            <li>Inherently flame-resistant aromatic polyamide structure</li>
+                            <li>Self-extinguishes in microgravity under nominal airflow</li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-4 border-t border-black/5">
+                        <h4 class="text-xs font-bold text-[#22c55e] uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[16px]">verified</span>
+                            Engineering Recommendations
+                        </h4>
+                        <p id="result-recs-text" class="text-xs md:text-sm text-on-surface leading-relaxed">
+                            Approved for general flight crew garments and cargo wraps in ISS environments. Re-qualification required if transitioning to exploration hyperoxic low-pressure atmosphere.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ranked Materials Table -->
+            <div class="glass-card rounded-3xl p-6 md:p-8">
+                <h3 class="text-lg font-bold text-on-surface mb-2">Spacecraft Materials Ranked by Fire Safety Score</h3>
+                <p class="text-xs text-on-surface-variant mb-6">Comparative safety ratings across orbital, lunar, and Martian platforms</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs md:text-sm">
+                        <thead>
+                            <tr class="border-b border-black/10 text-on-surface-variant uppercase text-[10px] font-bold">
+                                <th class="py-3 px-4">Material</th>
+                                <th class="py-3 px-4">ISS (0g)</th>
+                                <th class="py-3 px-4">Lunar (0.16g)</th>
+                                <th class="py-3 px-4">Martian (0.38g)</th>
+                                <th class="py-3 px-4">Risk Tier</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranked-table-body" class="divide-y divide-black/5 text-on-surface">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <!-- VIEW 6: GRAPH                                                     -->
+        <!-- ══════════════════════════════════════════════════════════════════ -->
+        <section id="view-graph" class="tab-view hidden space-y-8">
+            <div class="pb-2 border-b border-black/5">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-on-surface">Microgravity Combustion Knowledge Graph</h2>
+                <p class="text-xs md:text-sm text-on-surface-variant">NetworkX entity relationship map connecting Experiments, Materials, Findings, and Safety Directives</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Graph Visualization Canvas -->
+                <div class="lg:col-span-8 glass-card rounded-3xl p-6 md:p-8 flex flex-col justify-between min-h-[500px]">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Entity Web (Canvas)</span>
+                        <div class="flex items-center gap-3 text-xs">
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span> Exp</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#3B82F6] inline-block"></span> Mat</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#22c55e] inline-block"></span> Find</span>
+                            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#ef4444] inline-block"></span> Safety</span>
+                        </div>
+                    </div>
+
+                    <div class="flex-1 w-full relative bg-white/40 rounded-2xl border border-white/60 p-4 min-h-[420px] flex items-center justify-center">
+                        <canvas id="graphCanvas" class="w-full h-full"></canvas>
+                    </div>
+                </div>
+
+                <!-- Node Inspector -->
+                <div class="lg:col-span-4 glass-card rounded-3xl p-6 md:p-8 space-y-6">
+                    <h3 class="text-base font-bold text-on-surface">Node Inspector</h3>
+                    <div>
+                        <label class="block text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-2">Select Graph Node</label>
+                        <select id="graph-node-select" class="w-full bg-white/70 border border-white/80 rounded-xl px-4 py-2.5 text-xs text-on-surface focus:ring-0 outline-none" onchange="inspectGraphNode()">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div id="graph-node-details" class="space-y-4 pt-2 border-t border-black/5 text-xs">
+                        <p class="text-on-surface-variant">Select an entity from the dropdown to inspect its relationships and connected flight parameters.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── FOOTER (Matching Design from spfrount) ── -->
+    <footer class="w-full py-12 text-on-surface-variant text-xs border-t border-black/5 bg-white/30 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">local_fire_department</span>
+                <span class="font-bold text-on-surface">Flame in Freefall</span>
+                <span class="text-on-surface-variant">| NASA International Space Apps Challenge 2026</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <span>Team Eagle20 (Haldwani, India)</span>
+                <span>•</span>
+                <span>Cross-Platform PWA & Desktop Ready</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ── APPLICATION CONTROLLER JAVASCRIPT ── -->
+    <script>
+        // State
+        let allExperiments = [];
+        let statsData = {};
+        let categoryChart = null;
+        let materialsChart = null;
+        let radarChart = null;
+        let graphNodes = [];
+        let graphEdges = [];
+
+        // Tab Navigation
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`view-${tabId}`);
+            if (target) {
+                target.classList.remove('hidden');
+            }
+
+            // Update nav item highlighting (exact nomenclature preserved)
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('text-primary', 'font-bold');
+                el.classList.add('text-on-surface-variant', 'font-medium');
+            });
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-on-surface-variant', 'font-medium');
+                activeNav.classList.add('text-primary', 'font-bold');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            if (tabId === 'compare' && !radarChart) {
+                setTimeout(runComparison, 100);
+            } else if (tabId === 'graph') {
+                setTimeout(drawGraphCanvas, 100);
+            }
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        }
+
+        // Quick Prompt
+        function quickPrompt(promptText) {
+            switchTab('chat');
+            const input = document.getElementById('chat-input-field');
+            if (input) {
+                input.value = promptText;
+                sendChatMessage();
+            }
+        }
+
+        function handleHeroSubmit() {
+            const prompt = document.getElementById('hero-prompt-input').value.trim();
+            if (prompt) {
+                quickPrompt(prompt);
+                document.getElementById('hero-prompt-input').value = '';
+            }
+        }
+
+        // API Fetchers
+        async function loadInitialData() {
+            try {
+                // Fetch stats
+                const resStats = await fetch('/api/stats');
+                statsData = await resStats.json();
+                
+                document.getElementById('stat-experiments').textContent = statsData.total_experiments || 12;
+                document.getElementById('stat-materials').textContent = statsData.materials_tested || 10;
+                document.getElementById('stat-findings').textContent = statsData.key_findings || 18;
+                document.getElementById('stat-guidelines').textContent = statsData.safety_guidelines || 7;
+
+                initDashboardCharts(statsData.categories || {}, statsData.material_types || {});
+
+                // Fetch experiments
+                const resExps = await fetch('/api/experiments');
+                const expsData = await resExps.json();
+                allExperiments = expsData.experiments || [];
+                populateExplorerFilters();
+                renderExperimentsGrid(allExperiments);
+                populateComparisonSelects();
+
+                // Fetch findings
+                const resFind = await fetch('/api/findings');
+                const findData = await resFind.json();
+                renderFindingsFeed(findData.findings || []);
+
+                // Fetch graph
+                const resGraph = await fetch('/api/graph');
+                const gData = await resGraph.json();
+                graphNodes = gData.nodes || [];
+                graphEdges = gData.edges || [];
+                populateGraphSelect();
+
+                // Run default safety score
+                calculateSafetyScore();
+            } catch (err) {
+                console.error("Error loading data:", err);
+            }
+        }
+
+        // Dashboard Charts
+        function initDashboardCharts(categories, matTypes) {
+            const ctx1 = document.getElementById('categoryChart').getContext('2d');
+            const catLabels = Object.keys(categories);
+            const catValues = Object.values(categories);
+
+            categoryChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: catLabels,
+                    datasets: [{
+                        data: catValues,
+                        backgroundColor: ['#FF5E3A', '#3B82F6', '#22C55E', '#A855F7', '#EF4444', '#F59E0B'],
+                        borderRadius: 8,
+                        barThickness: 28,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.04)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+
+            const ctx2 = document.getElementById('materialsChart').getContext('2d');
+            const matLabels = Object.keys(matTypes);
+            const matValues = Object.values(matTypes);
+
+            materialsChart = new Chart(ctx2, {
+                type: 'doughnut',
+                data: {
+                    labels: matLabels,
+                    datasets: [{
+                        data: matValues,
+                        backgroundColor: ['#3B82F6', '#FF5E3A', '#22C55E', '#A855F7', '#EF4444'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Findings Feed
+        function renderFindingsFeed(findings) {
+            const container = document.getElementById('findings-container');
+            container.innerHTML = '';
+            findings.slice(0, 6).forEach(f => {
+                const title = f.title || f.name || 'NASA Observation';
+                const source = f.source_experiment || 'NASA Combustion';
+                const desc = f.description || '';
+                
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-5 border-l-4 border-l-primary hover:shadow-md transition-shadow';
+                card.innerHTML = `
+                    <div class="text-[11px] font-bold text-primary uppercase tracking-wider mb-1">🚀 ${source}</div>
+                    <div class="font-bold text-sm text-on-surface mb-2">${title}</div>
+                    <div class="text-xs text-on-surface-variant line-clamp-3">${desc}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Explorer
+        function populateExplorerFilters() {
+            const catSelect = document.getElementById('exp-category-select');
+            const platSelect = document.getElementById('exp-platform-select');
+            
+            const cats = new Set(allExperiments.map(e => e.category).filter(Boolean));
+            const plats = new Set(allExperiments.map(e => e.platform).filter(Boolean));
+
+            cats.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c;
+                opt.textContent = c;
+                catSelect.appendChild(opt);
+            });
+
+            plats.forEach(p => {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                platSelect.appendChild(opt);
+            });
+        }
+
+        function filterExperiments() {
+            const q = document.getElementById('exp-search-input').value.toLowerCase();
+            const cat = document.getElementById('exp-category-select').value;
+            const plat = document.getElementById('exp-platform-select').value;
+
+            const filtered = allExperiments.filter(e => {
+                const matchesQ = !q || (
+                    (e.name && e.name.toLowerCase().includes(q)) ||
+                    (e.description && e.description.toLowerCase().includes(q)) ||
+                    (e.materials_tested && e.materials_tested.some(m => m.toLowerCase().includes(q)))
+                );
+                const matchesCat = (cat === 'All Categories') || (e.category === cat);
+                const matchesPlat = (plat === 'All Platforms') || (e.platform === plat);
+                return matchesQ && matchesCat && matchesPlat;
+            });
+
+            renderExperimentsGrid(filtered);
+        }
+
+        function renderExperimentsGrid(experiments) {
+            const grid = document.getElementById('experiments-grid');
+            grid.innerHTML = '';
+
+            if (experiments.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-on-surface-variant">No matching NASA experiments found.</div>`;
+                return;
+            }
+
+            experiments.forEach(e => {
+                const name = e.name || 'Experiment';
+                const platform = e.platform || 'ISS';
+                const cat = e.category || 'General';
+                const desc = e.description || '';
+                const mats = (e.materials_tested || []).join(', ') || 'Solid/gaseous fuels';
+                const findings = e.key_findings || [];
+                const safety = e.safety_implications || [];
+
+                const card = document.createElement('div');
+                card.className = 'glass-card rounded-2xl p-6 flex flex-col justify-between hover:shadow-lg transition-all border border-white/80';
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="text-[10px] font-bold px-2.5 py-1 rounded-full bg-primary/10 text-primary uppercase tracking-wider">${cat}</span>
+                            <span class="text-xs font-semibold text-on-surface-variant">${platform}</span>
+                        </div>
+                        <h3 class="font-bold text-base text-on-surface">${name}</h3>
+                        <p class="text-xs text-on-surface-variant line-clamp-3 leading-relaxed">${desc}</p>
+                        
+                        <div class="pt-2 text-[11px] text-on-surface-variant">
+                            <span class="font-bold text-on-surface">Materials:</span> ${mats}
+                        </div>
+                    </div>
+
+                    ${findings.length > 0 ? `
+                        <div class="mt-4 pt-3 border-t border-black/5 text-xs">
+                            <span class="font-bold text-[#22c55e] block mb-1">Key Finding:</span>
+                            <p class="text-on-surface-variant text-[11px] line-clamp-2">${findings[0]}</p>
+                        </div>
+                    ` : ''}
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Comparison View
+        function populateComparisonSelects() {
+            const s1 = document.getElementById('compare-exp1-select');
+            const s2 = document.getElementById('compare-exp2-select');
+            s1.innerHTML = '';
+            s2.innerHTML = '';
+
+            allExperiments.forEach((e, idx) => {
+                const opt1 = new Option(e.name, e.name, idx === 0, idx === 0);
+                const opt2 = new Option(e.name, e.name, idx === 1, idx === 1);
+                s1.add(opt1);
+                s2.add(opt2);
+            });
+        }
+
+        async function runComparison() {
+            const e1 = document.getElementById('compare-exp1-select').value || 'SAFFIRE';
+            const e2 = document.getElementById('compare-exp2-select').value || 'BASS';
+
+            const res = await fetch(`/api/compare?e1=${encodeURIComponent(e1)}&e2=${encodeURIComponent(e2)}`);
+            const comp = await res.json();
+
+            const m1 = comp.exp1.metrics;
+            const m2 = comp.exp2.metrics;
+
+            const labels = ['Flame Spread', 'Extinction Time', 'Soot Yield', 'Heat Release', 'Safety Score'];
+            const data1 = [m1.flame_spread, m1.extinction_time, m1.soot_yield, m1.heat_release, m1.safety_score];
+            const data2 = [m2.flame_spread, m2.extinction_time, m2.soot_yield, m2.heat_release, m2.safety_score];
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChart) {
+                radarChart.destroy();
+            }
+
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: comp.exp1.name.slice(0, 22),
+                            data: data1,
+                            backgroundColor: 'rgba(255, 94, 58, 0.2)',
+                            borderColor: '#FF5E3A',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#FF5E3A',
+                        },
+                        {
+                            label: comp.exp2.name.slice(0, 22),
+                            data: data2,
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: '#3B82F6',
+                            borderWidth: 2,
+                            pointBackgroundColor: '#3B82F6',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            min: 0,
+                            max: 10,
+                            ticks: { display: false, stepSize: 2 },
+                            grid: { color: 'rgba(0,0,0,0.06)' },
+                            angleLines: { color: 'rgba(0,0,0,0.06)' },
+                            pointLabels: { font: { size: 10, weight: '600' } }
+                        }
+                    },
+                    plugins: {
+                        legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } }
+                    }
+                }
+            });
+
+            // Scorecard Table
+            const tbl = document.getElementById('compare-table-container');
+            tbl.innerHTML = `
+                <table class="w-full text-left border-collapse text-xs md:text-sm">
+                    <thead>
+                        <tr class="border-b border-black/10 text-on-surface-variant uppercase text-[10px] font-bold">
+                            <th class="py-2.5 px-3">Parameter</th>
+                            <th class="py-2.5 px-3 text-primary">${comp.exp1.name.slice(0, 20)}</th>
+                            <th class="py-2.5 px-3 text-[#3B82F6]">${comp.exp2.name.slice(0, 20)}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black/5 text-on-surface">
+                        ${labels.map((l, i) => `
+                            <tr>
+                                <td class="py-2.5 px-3 font-medium">${l}</td>
+                                <td class="py-2.5 px-3 font-bold text-primary">${data1[i]} / 10</td>
+                                <td class="py-2.5 px-3 font-bold text-[#3B82F6]">${data2[i]} / 10</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        // Safety Scorer
+        async function calculateSafetyScore() {
+            const material = document.getElementById('scorer-material').value;
+            const environment = document.getElementById('scorer-env').value;
+            const oxygen_level = document.getElementById('scorer-o2').value;
+
+            try {
+                const res = await fetch('/api/score', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ material, environment, oxygen_level })
+                });
+                const data = await res.json();
+
+                // Update score card
+                const scoreVal = document.getElementById('result-score-val');
+                scoreVal.textContent = data.score;
+                scoreVal.style.color = data.risk_color;
+
+                const badge = document.getElementById('result-risk-badge');
+                badge.textContent = `${data.risk_level} RISK`;
+                badge.style.color = data.risk_color;
+                badge.style.backgroundColor = `${data.risk_color}20`;
+                badge.style.borderColor = `${data.risk_color}40`;
+
+                // Update factors
+                const factorsList = document.getElementById('result-factors-list');
+                factorsList.innerHTML = data.factors.map(f => `<li>${f}</li>`).join('');
+
+                // Update recommendations
+                document.getElementById('result-recs-text').textContent = data.recommendations;
+
+                // Update ranked table
+                const tbody = document.getElementById('ranked-table-body');
+                tbody.innerHTML = data.ranked_table.map(row => `
+                    <tr class="hover:bg-white/40 transition-colors">
+                        <td class="py-3 px-4 font-bold">${row.material}</td>
+                        <td class="py-3 px-4">${row.iss}</td>
+                        <td class="py-3 px-4">${row.lunar}</td>
+                        <td class="py-3 px-4">${row.martian}</td>
+                        <td class="py-3 px-4 font-bold text-xs ${row.risk === 'LOW' ? 'text-[#22c55e]' : (row.risk === 'MODERATE' ? 'text-amber-500' : 'text-red-500')}">${row.risk}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error("Error scoring:", err);
+            }
+        }
+
+        // Chat
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input-field');
+            const message = input.value.trim();
+            if (!message) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+
+            // Append User Message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'flex gap-3 flex-row-reverse';
+            userMsg.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-white/60 flex items-center justify-center text-primary font-bold shadow-sm">
+                    <span class="material-symbols-outlined text-[16px]">person</span>
+                </div>
+                <div class="bg-primary/10 rounded-2xl rounded-tr-none p-3.5 border border-primary/20 text-sm text-on-surface max-w-[80%] shadow-sm">
+                    ${message}
+                </div>
+            `;
+            chatMessages.appendChild(userMsg);
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Loading state
+            const loadingMsg = document.createElement('div');
+            loadingMsg.className = 'flex gap-3 loading-indicator';
+            loadingMsg.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-white/60 flex items-center justify-center text-primary font-bold shadow-sm animate-spin">
+                    <span class="material-symbols-outlined text-[16px]">sync</span>
+                </div>
+                <div class="bg-white/60 rounded-2xl rounded-tl-none p-3.5 border border-white/70 text-xs text-on-surface-variant flex items-center gap-2">
+                    <span>Synthesizing NASA combustion research & graph relationships...</span>
+                </div>
+            `;
+            chatMessages.appendChild(loadingMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+
+                loadingMsg.remove();
+
+                const botMsg = document.createElement('div');
+                botMsg.className = 'flex gap-3';
+                
+                const sourcesHtml = data.sources && data.sources.length > 0 
+                    ? `<div class="mt-2.5 pt-2 border-t border-black/5 text-[11px] text-primary font-semibold">
+                         Cited NASA Sources: ${data.sources.map(s => `<span class="bg-primary/10 px-2 py-0.5 rounded text-[10px] mr-1">${s}</span>`).join('')}
+                       </div>` 
+                    : '';
+
+                botMsg.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-primary/20 shrink-0 border border-white/60 flex items-center justify-center text-primary font-bold shadow-sm">
+                        <span class="material-symbols-outlined text-[16px]">auto_awesome</span>
+                    </div>
+                    <div class="bg-white/75 backdrop-blur-md rounded-2xl rounded-tl-none p-4 border border-white/80 text-sm text-on-surface max-w-[85%] shadow-sm leading-relaxed space-y-2">
+                        <div class="whitespace-pre-line">${data.answer}</div>
+                        ${sourcesHtml}
+                    </div>
+                `;
+                chatMessages.appendChild(botMsg);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            } catch (err) {
+                loadingMsg.remove();
+                console.error("Chat error:", err);
+            }
+        }
+
+        async function clearChatMemory() {
+            await fetch('/api/chat/memory', { method: 'DELETE' });
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="p-4 rounded-xl bg-white/50 border border-white/60 text-xs text-on-surface-variant text-center">
+                    Conversation memory reset. Ask a new microgravity combustion query!
+                </div>
+            `;
+        }
+
+        // Graph Inspector
+        function populateGraphSelect() {
+            const select = document.getElementById('graph-node-select');
+            select.innerHTML = '';
+            graphNodes.forEach(n => {
+                const opt = new Option(`${n.id} (${n.node_type || 'entity'})`, n.id);
+                select.add(opt);
+            });
+            inspectGraphNode();
+        }
+
+        function inspectGraphNode() {
+            const select = document.getElementById('graph-node-select');
+            const targetId = select.value;
+            const container = document.getElementById('graph-node-details');
+
+            const node = graphNodes.find(n => n.id === targetId);
+            if (!node) return;
+
+            const outbound = graphEdges.filter(e => e.source === targetId);
+            const inbound = graphEdges.filter(e => e.target === targetId);
+
+            container.innerHTML = `
+                <div class="p-3 bg-white/60 rounded-xl border border-white/70">
+                    <span class="text-[10px] uppercase font-bold text-primary">${node.node_type || 'Entity'}</span>
+                    <h4 class="font-bold text-sm text-on-surface">${node.id}</h4>
+                </div>
+                
+                <div>
+                    <span class="font-bold text-on-surface block mb-1">Outbound Connections (${outbound.length}):</span>
+                    <ul class="space-y-1 text-on-surface-variant">
+                        ${outbound.slice(0, 6).map(e => `<li>➔ <b>${e.relationship || 'links'}</b>: ${e.target}</li>`).join('') || '<li>None</li>'}
+                    </ul>
+                </div>
+
+                <div>
+                    <span class="font-bold text-on-surface block mb-1">Inbound Connections (${inbound.length}):</span>
+                    <ul class="space-y-1 text-on-surface-variant">
+                        ${inbound.slice(0, 6).map(e => `<li>🠔 <b>${e.relationship || 'links'}</b>: ${e.source}</li>`).join('') || '<li>None</li>'}
+                    </ul>
+                </div>
+            `;
+        }
+
+        function drawGraphCanvas() {
+            const canvas = document.getElementById('graphCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.parentElement.clientWidth;
+            const h = canvas.parentElement.clientHeight || 400;
+            canvas.width = w;
+            canvas.height = h;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Simple force simulation projection
+            const sampleNodes = graphNodes.slice(0, 24);
+            const radius = Math.min(w, h) * 0.38;
+            const cx = w / 2;
+            const cy = h / 2;
+
+            const coords = {};
+            sampleNodes.forEach((n, idx) => {
+                const angle = (idx / sampleNodes.length) * 2 * Math.PI;
+                const r = radius * (0.6 + (idx % 3) * 0.2);
+                coords[n.id] = { x: cx + r * Math.cos(angle), y: cy + r * Math.sin(angle), type: n.node_type };
+            });
+
+            // Draw edges
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+            graphEdges.forEach(e => {
+                if (coords[e.source] && coords[e.target]) {
+                    ctx.beginPath();
+                    ctx.moveTo(coords[e.source].x, coords[e.source].y);
+                    ctx.lineTo(coords[e.target].x, coords[e.target].y);
+                    ctx.stroke();
+                }
+            });
+
+            // Draw nodes
+            sampleNodes.forEach(n => {
+                const pt = coords[n.id];
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 8, 0, 2 * Math.PI);
+                if (pt.type === 'experiment') ctx.fillStyle = '#FF5E3A';
+                else if (pt.type === 'material') ctx.fillStyle = '#3B82F6';
+                else if (pt.type === 'finding') ctx.fillStyle = '#22C55E';
+                else ctx.fillStyle = '#EF4444';
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                ctx.fillStyle = '#111827';
+                ctx.font = '9px Plus Jakarta Sans, sans-serif';
+                ctx.fillText(n.id.slice(0, 10), pt.x + 10, pt.y + 3);
+            });
+        }
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+
+        // Initialize on load
+        window.addEventListener('DOMContentLoaded', loadInitialData);
+    </script>
+</body>
+</html>

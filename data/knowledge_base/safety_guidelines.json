@@ -1,0 +1,169 @@
+{
+  "guidelines": [
+    {
+      "id": "sg01",
+      "title": "Cabin Ventilation Shutdown Protocol During Suspected Fire Events",
+      "environment": "ISS / Transit",
+      "category": "Emergency Response",
+      "recommendation": "Immediately shut down all inter-module ventilation (IMV) and recirculating fan systems upon any primary smoke or ionization trigger.",
+      "rationale": "In microgravity, convective air current is the sole mechanism driving fresh oxidizer to a flame. Ceasing ventilation induces immediate radiative quenching and starves the flame boundary layer.",
+      "related_experiments": ["BASS-II", "SAFFIRE-I", "CFS-1"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg02",
+      "title": "Material Qualification in Exploration Atmospheres (Low Pressure, High O2)",
+      "environment": "Lunar",
+      "category": "Material Selection",
+      "recommendation": "All habitable module non-metallic materials must pass NASA STD-6001 Test 1 at 34% O2 and 56.5 kPa (8.2 psia) rather than standard 21% O2 / 101.3 kPa.",
+      "rationale": "Lunar suit ingress/egress protocols utilize hyperoxic low-pressure environments to prevent decompression sickness, drastically reducing ignition thresholds for common plastics.",
+      "related_experiments": ["SAFFIRE-II", "BASS-II", "SoFIE"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg03",
+      "title": "Photoelectric Light-Scattering Smoke Detectors Deployment",
+      "environment": "All Environments",
+      "category": "Fire Detection",
+      "recommendation": "Mandate dual-wavelength photoelectric optical scattering smoke detectors alongside off-gas trace analyzers, replacing reliance on ionization detectors.",
+      "rationale": "Microgravity soot aggregates into large chain structures with aerodynamic diameters exceeding 300 nm, to which ionization detectors exhibit poor responsiveness.",
+      "related_experiments": ["SPICE", "ACME-CLD"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg04",
+      "title": "Post-Extinguishment Thermal Quarantine and Cool Flame Surveillance",
+      "environment": "ISS / Deep-Space Transit",
+      "category": "Post-Fire Safety",
+      "recommendation": "Maintain a minimum 45-minute post-extinguishment thermal camera inspection before restoring module airflow or removing crew breathing apparatus.",
+      "rationale": "FLEX-2 experiments established that low-temperature cool flames and smoldering can silently persist after visible extinction, re-igniting explosively when airflow returns.",
+      "related_experiments": ["FLEX-2", "BASS"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg05",
+      "title": "Prohibition of Cast Acrylic (PMMA) in Pressurized Crew Compartments",
+      "environment": "All Environments",
+      "category": "Material Selection",
+      "recommendation": "Ban all cast PMMA (Plexiglass/acrylic) from pressurized habitable zones; replace with transparent polycarbonate with flame-retardant surface coatings or toughened borosilicate glass.",
+      "rationale": "PMMA sustains violent flame propagation with dripping flaming liquid droplets that scatter across microgravity cabins under nominal ventilation.",
+      "related_experiments": ["BASS", "BASS-II", "SoFIE"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg06",
+      "title": "Fine Water Mist Extinguisher Deployment in Crew Quarters",
+      "environment": "Lunar / Martian Habitats",
+      "category": "Suppression Systems",
+      "recommendation": "Deploy portable water mist extinguishers (15-30 µm droplet MVD) as primary first-response units in crew living quarters, reserving CO2/gaseous suppressants for uncrewed equipment racks.",
+      "rationale": "Fine water mist avoids crew asphyxiation hazards inherent to CO2 flooding in confined habitat volumes, while providing 55% greater cooling efficacy in microgravity.",
+      "related_experiments": ["FLEX-2", "ACME-BRE"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg07",
+      "title": "Electrical Harness Thermal Sensor Array and Overcurrent Protection",
+      "environment": "ISS / Deep-Space Transit",
+      "category": "Electrical Safety",
+      "recommendation": "Install distributed fiber-optic Bragg grating temperature sensors along primary power bus wiring harnesses and avionics raceways.",
+      "rationale": "Wire insulation pyrolyzes up to 60 seconds prior to open arc ignition in microgravity; early thermal detection enables automated load shedding before pyrolyzate accumulation.",
+      "related_experiments": ["BASS-II", "SoFIE"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg08",
+      "title": "Partial Gravity (0.16g) Ventilation Duct Staggering in Lunar Bases",
+      "environment": "Lunar",
+      "category": "Habitat Architecture",
+      "recommendation": "Stagger ceiling supply and floor return ventilation duct registers to prevent forming vertical chimney-effect convection columns in 0.16g.",
+      "rationale": "Lunar 0.16g produces partial buoyancy that accelerates flame spread rates by up to 20% compared to pure microgravity, making natural vertical draft channels especially dangerous.",
+      "related_experiments": ["Aircraft Parabolic Campaign", "SAFFIRE-III"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg09",
+      "title": "3D-Printed Component Infill and Surface Sealing Standards",
+      "environment": "Lunar / Martian Habitats",
+      "category": "Additive Manufacturing",
+      "recommendation": "All additively manufactured polymer parts (PEEK, Ultem 9085) produced in space must undergo vapor smoothing and be oriented with layer lines perpendicular to airflow.",
+      "rationale": "Porosity between 3D-printed layers acts as capillary oxygen delivery paths, accelerating combustion propagation along layer boundaries by 22%.",
+      "related_experiments": ["SoFIE-MIST"],
+      "risk_level": "Medium",
+      "priority": 3
+    },
+    {
+      "id": "sg10",
+      "title": "ECLSS High-Efficiency Particulate Air (HEPA) Pre-Filter Sacrificial Barriers",
+      "environment": "ISS / Martian Habitat",
+      "category": "Life Support Protection",
+      "recommendation": "Incorporate automated fire-damping isolation valves and sacrificial pre-filters ahead of main ECLSS catalytic oxidizers and CO2 scrubbers.",
+      "rationale": "Microgravity fires generate double the soot volume fraction of 1g fires, and suspended ash can permanently blind catalytic life support beds within minutes.",
+      "related_experiments": ["SPICE", "SAFFIRE-II"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg11",
+      "title": "Nomex-Kevlar Protective Blanket Staging Near Lithium Battery Bays",
+      "environment": "All Environments",
+      "category": "Thermal Containment",
+      "recommendation": "Store multi-layer Nomex/aerogel fire blankets adjacent to all lithium-ion battery storage lockers and spacesuit recharge racks.",
+      "rationale": "Battery thermal runaway in 0g creates directional jets of burning electrolyte and incandescent particles that easily ignite adjacent non-metallic bulkheads.",
+      "related_experiments": ["BASS-II", "SoFIE-GEL"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg12",
+      "title": "Low-Pressure Habitat Fire Depressurization Procedure",
+      "environment": "Martian Habitat",
+      "category": "Emergency Procedures",
+      "recommendation": "Design surface habitat modules with emergency rapid depressurization valves capable of dropping module pressure below 15 kPa within 90 seconds.",
+      "rationale": "Depressurization starves combustion below limiting oxygen partial pressures without requiring massive consumable chemical extinguishing agents.",
+      "related_experiments": ["SAFFIRE-II", "ACME-BRE"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg13",
+      "title": "Silicone and Sealant Quantity Limits in Pressurized Volumes",
+      "environment": "ISS / Transit",
+      "category": "Material Selection",
+      "recommendation": "Enforce strict mass limits on RTV silicone sealants and require fluorosilicone or metal-jacketed metal c-rings for primary hatch seals.",
+      "rationale": "Burning silicone produces free-floating abrasive silica (SiO2) micro-ash that remains perpetually airborne in 0g, presenting acute corneal and inhalation hazards.",
+      "related_experiments": ["BASS", "SoFIE"],
+      "risk_level": "High",
+      "priority": 2
+    },
+    {
+      "id": "sg14",
+      "title": "Real-Time Carbon Monoxide Electrochemical Sensor Thresholds",
+      "environment": "All Environments",
+      "category": "Crew Protection",
+      "recommendation": "Set autonomous alarm thresholds for CO at 25 ppm (warning) and 50 ppm (emergency breathing gear donning), well below terrestrial 150 ppm standards.",
+      "rationale": "Microgravity fires yield an 7× higher CO/CO2 ratio than well-ventilated 1g fires due to incomplete diffusion burning, causing rapid crew incapacitation.",
+      "related_experiments": ["SAFFIRE-II", "BASS"],
+      "risk_level": "Critical",
+      "priority": 1
+    },
+    {
+      "id": "sg15",
+      "title": "Electrostatic Active Extinction in Unmanned Avionics Bays",
+      "environment": "Deep-Space Transit",
+      "category": "Advanced Suppression",
+      "recommendation": "Implement 5 kV DC grid electrodes inside sealed avionics chassis for remote flame detachment and quenching without gas discharge.",
+      "rationale": "ACME E-Field experiments demonstrated instant flame lift-off and extinction in under 1.2 seconds, preserving delicate electronics from corrosive residues.",
+      "related_experiments": ["ACME-E-FIELD"],
+      "risk_level": "Medium",
+      "priority": 3
+    }
+  ]
+}

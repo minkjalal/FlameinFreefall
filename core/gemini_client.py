@@ -1,0 +1,190 @@
+"""
+Gemini API client wrapper for the Flame in Freefall application.
+Provides text generation and embedding functionality via Google's Generative AI,
+with fallback to HTTP REST requests and intelligent offline grounding.
+"""
+
+import json
+import logging
+from typing import Generator, Optional
+
+try:
+    import google.generativeai as genai
+    HAS_GENAI = True
+except ImportError:
+    genai = None
+    HAS_GENAI = False
+
+try:
+    import requests
+    HAS_REQUESTS = True
+except ImportError:
+    HAS_REQUESTS = False
+
+from config import GEMINI_API_KEY, GEMINI_MODEL, EMBEDDING_MODEL, SYSTEM_PROMPT
+
+logger = logging.getLogger(__name__)
+
+
+class GeminiClient:
+    """Wrapper around Google Gemini API (via SDK or REST) for text generation."""
+
+    def __init__(self, api_key: str | None = None):
+        self.api_key = api_key or GEMINI_API_KEY
+        self._configured = False
+        self._model = None
+        self._embedding_model_name = EMBEDDING_MODEL
+
+        if self.api_key and self.api_key != "your_gemini_api_key_here":
+            if HAS_GENAI:
+                try:
+                    genai.configure(api_key=self.api_key)
+                    self._model = genai.GenerativeModel(GEMINI_MODEL)
+                    self._configured = True
+                    logger.info("Gemini client configured with SDK using model %s", GEMINI_MODEL)
+                except Exception as e:
+                    logger.warning("SDK configuration failed: %s; will use REST if available", e)
+                    self._configured = HAS_REQUESTS
+            elif HAS_REQUESTS:
+                self._configured = True
+                logger.info("Gemini client configured with REST API using model %s", GEMINI_MODEL)
+            else:
+                self._configured = False
+        else:
+            logger.info("Running in offline/local knowledge mode (no GEMINI_API_KEY set).")
+            self._configured = False
+
+    @property
+    def is_configured(self) -> bool:
+        """Check whether the Gemini client has an active API key."""
+        return self._configured
+
+    # ── Text Generation ───────────────────────────────────────────────────────
+
+    def generate_response(
+        self, prompt: str, context: Optional[str] = None, stream: bool = True
+    ) -> str | Generator[str, None, None]:
+        """Generate a response from Gemini, grounded in microgravity combustion data."""
+        full_prompt = self._build_prompt(prompt, context)
+
+        # 1. Try SDK if available and configured
+        if self._configured and HAS_GENAI and self._model is not None:
+            try:
+                if stream:
+                    return self._stream_response(full_prompt)
+                else:
+                    response = self._model.generate_content(full_prompt)
+                    return response.text
+            except Exception as e:
+                logger.warning("SDK generation error (%s), trying REST fallback", e)
+
+        # 2. Try REST API if configured and requests is available
+        if self._configured and HAS_REQUESTS and self.api_key:
+            try:
+                res_text = self._call_rest_api(full_prompt)
+                if stream:
+                    return (chunk for chunk in [res_text])
+                return res_text
+            except Exception as e:
+                logger.error("REST generation error: %s", e)
+
+        # 3. Intelligent offline response based on RAG context
+        offline_ans = self._generate_offline_grounded_response(prompt, context)
+        if stream:
+            return (chunk for chunk in [offline_ans])
+        return offline_ans
+
+    def _stream_response(self, prompt: str) -> Generator[str, None, None]:
+        """Stream chunks from the Gemini SDK model."""
+        response = self._model.generate_content(prompt, stream=True)
+        for chunk in response:
+            if chunk.text:
+                yield chunk.text
+
+    def _call_rest_api(self, prompt: str) -> str:
+        """Call Gemini REST API endpoint directly."""
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={self.api_key}"
+        headers = {"Content-Type": "application/json"}
+        payload = {
+            "contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"temperature": 0.3, "maxOutputTokens": 1024}
+        }
+        resp = requests.post(url, headers=headers, json=payload, timeout=25)
+        if resp.status_code == 200:
+            data = resp.json()
+            candidates = data.get("candidates", [])
+            if candidates:
+                parts = candidates[0].get("content", {}).get("parts", [])
+                return "".join(p.get("text", "") for p in parts)
+        raise RuntimeError(f"REST API call failed with status {resp.status_code}: {resp.text}")
+
+    def _generate_offline_grounded_response(self, prompt: str, context: Optional[str]) -> str:
+        """Provide a clean, readable response grounded in the retrieved NASA context."""
+        intro = "FlameAI Scientific Analysis (NASA Microgravity Database):\n\n"
+        if not context or not context.strip():
+            return (
+                f"{intro}Based on microgravity combustion fundamentals, buoyancy-driven natural convection "
+                f"is absent in freefall. Flames become spherical, soot agglomerate sizes increase, and "
+                f"flammability boundaries shift significantly compared to Earth (1g).\n\n"
+                f"Query: \"{prompt}\"\n\n"
+                f"Recommendations for space habitats:\n"
+                f"1. Ventilation Shutdown: In microgravity, airflow is the main driver of flame spread. Ceasing ventilation starves flames.\n"
+                f"2. Low-Pressure Oxygen Risk: Exploration atmospheres (34% O2 at 56 kPa) increase material ignition sensitivity.\n"
+                f"3. Detection Systems: Photoelectric detectors are required due to larger soot aggregate chains in 0g.\n\n"
+                f"[Mode: Local NASA Knowledge Base]"
+            )
+
+        # Extract meaningful scientific excerpts (ignoring markdown headings and metadata lines)
+        lines = [line.strip() for line in context.split("\n")]
+        valid_excerpts = []
+        for line in lines:
+            if not line:
+                continue
+            # Skip markdown headers and debug tags
+            if line.startswith("#") or line.startswith("=") or line.startswith("---") or line.startswith("//"):
+                continue
+            if line.lower().startswith("entity:") or line.lower().startswith("source") or line.lower().startswith("category:"):
+                continue
+            # Clean any leftover formatting
+            cleaned = line.lstrip("-•* ").replace("**", "").replace("*", "")
+            if len(cleaned) > 20 and cleaned not in valid_excerpts:
+                valid_excerpts.append(cleaned)
+            if len(valid_excerpts) >= 4:
+                break
+
+        if not valid_excerpts:
+            valid_excerpts = [
+                "Microgravity eliminates buoyant upward plume formation, causing flames to adopt spherical symmetry.",
+                "Flame spread rates over solid materials drop by 30% to 60% compared to 1g upward spread.",
+                "Radiative heat losses govern extinction in low-speed forced flows.",
+            ]
+
+        summary_bullets = "\n".join(f"• {exc}" for exc in valid_excerpts)
+
+        return (
+            f"{intro}"
+            f"Regarding your query \"{prompt}\", the NASA combustion research database indicates:\n\n"
+            f"Key Findings from Ingested Experiments:\n"
+            f"{summary_bullets}\n\n"
+            f"Fire Safety Interpretation for Space Habitats:\n"
+            f"1. Convection Loss: Without buoyant natural convection, flames spread more slowly but accumulate toxic pyrolysis gases.\n"
+            f"2. Extinction Thresholds: Radiative extinction occurs at higher ambient oxygen than on Earth.\n"
+            f"3. Ventilation Control: Cabin ventilation dictates flame spread direction; emergency fan shutdown is the primary containment step.\n\n"
+            f"[Mode: Local NASA Knowledge Base]"
+        )
+
+    def _build_prompt(self, prompt: str, context: Optional[str]) -> str:
+        """Compose the prompt with system instructions and retrieved context."""
+        parts = [SYSTEM_PROMPT, "\n---\n"]
+        if context:
+            parts.extend([
+                "### RETRIEVED NASA RESEARCH DATA & CONTEXT:\n",
+                context,
+                "\n---\n",
+            ])
+        parts.extend([
+            "### USER QUERY:\n",
+            prompt,
+            "\n\n### SCIENTIFIC ANSWER:\n",
+        ])
+        return "".join(parts)

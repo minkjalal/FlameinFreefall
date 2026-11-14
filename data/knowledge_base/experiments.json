@@ -1,0 +1,568 @@
+{
+  "experiments": [
+    {
+      "id": "bass-1",
+      "name": "BASS (Burning and Suppression of Solids)",
+      "acronym": "BASS",
+      "category": "Solid Combustion",
+      "platform": "ISS",
+      "years": "2011-2013",
+      "description": "BASS investigated the burning and extinction characteristics of a wide variety of fuel samples in microgravity to guide material selection and fire safety strategies for spacecraft. The experiment tested thin and thick solid fuels in varying atmospheric conditions aboard the International Space Station, providing foundational data on how fire behaves differently without buoyancy-driven convection.",
+      "objectives": [
+        "Determine flame spread rates over thin solid fuels in microgravity",
+        "Assess flammability limits of spacecraft-relevant materials in reduced gravity",
+        "Compare concurrent and opposed-flow flame spread in microgravity vs normal gravity",
+        "Evaluate the influence of oxygen concentration and flow velocity on flame behavior",
+        "Provide data to improve NASA-STD-6001 material flammability testing standards"
+      ],
+      "materials_tested": [
+        "PMMA (acrylic)",
+        "Cotton-fiberglass blend fabric",
+        "Nomex",
+        "Cellulose",
+        "SIBAL cloth"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 15, "max": 24, "unit": "%"},
+        "pressure": {"value": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 0, "max": 40, "unit": "cm/s"}
+      },
+      "key_findings": [
+        "Concurrent flame spread rates over thin solid fuels in microgravity are 30-60% lower than in normal gravity at comparable conditions",
+        "Flame extinction occurs at lower oxygen concentrations in microgravity for some materials due to reduced buoyant flow and radiative heat losses",
+        "Thin fuels exhibit hemispherical blue flame structures in quiescent microgravity, contrasting with elongated yellow flames in 1g",
+        "Flow velocity has a non-monotonic effect on flame spread: low flows can extinguish flames by insufficient oxygen delivery, while very high flows can blow flames off",
+        "PMMA samples showed a critical flow velocity below which flames could not sustain in microgravity"
+      ],
+      "safety_implications": [
+        "Ground-based Test 1 flammability screening may not capture worst-case scenarios for some materials in microgravity",
+        "Material flammability rankings can change between 1g and microgravity conditions",
+        "Ventilation system design significantly affects fire propagation potential in spacecraft",
+        "Thin materials such as paper and fabric may be more hazardous than thick materials in microgravity under certain flow conditions"
+      ],
+      "flame_characteristics": {
+        "shape": "Hemispherical to elongated depending on flow",
+        "color": "Blue with yellow edges at higher oxygen concentrations",
+        "spread_rate_microgravity": "0.5-2.0 cm/s",
+        "spread_rate_earth": "1.0-5.0 cm/s"
+      }
+    },
+    {
+      "id": "bass-2",
+      "name": "BASS-II (Burning and Suppression of Solids - II)",
+      "acronym": "BASS-II",
+      "category": "Solid Combustion",
+      "platform": "ISS",
+      "years": "2014-2017",
+      "description": "BASS-II continued and expanded upon the original BASS experiment aboard the ISS. It investigated flame spread over flat composite and fabric samples in a flow duct, focusing on materials relevant to the Constellation program and future exploration vehicles. BASS-II also explored the effect of sample width and thickness on flame behavior in microgravity.",
+      "objectives": [
+        "Extend flame spread measurements to wider and thicker fuel samples",
+        "Investigate the effect of sample geometry on flame behavior in microgravity",
+        "Test composite and multi-layer fabric materials used in advanced spacecraft designs",
+        "Determine conditions for flame growth versus extinction in realistic cabin airflow",
+        "Refine flammability screening criteria for exploration-class missions"
+      ],
+      "materials_tested": [
+        "PMMA (acrylic) - thin and thick samples",
+        "Cotton-fiberglass blend fabric",
+        "Nomex fabric",
+        "Composite fabric layers",
+        "Silicone rubber sheets"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 16, "max": 22, "unit": "%"},
+        "pressure": {"value": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 0, "max": 30, "unit": "cm/s"}
+      },
+      "key_findings": [
+        "Wider samples exhibited edge effects that accelerated flame spread compared to narrow samples",
+        "Multi-layer fabrics showed complex burning behaviors with inter-layer flame spread",
+        "Thick PMMA samples showed a longer transient flame development phase in microgravity",
+        "Sample width-to-thickness ratio is a critical parameter for material flammability assessment",
+        "Flame spread showed greater sensitivity to oxygen concentration at low flow velocities"
+      ],
+      "safety_implications": [
+        "Standard small-scale flammability tests may underestimate fire risk for large material surfaces",
+        "Layered fabric assemblies require special consideration in spacecraft fire safety assessment",
+        "Material geometry and mounting configuration affect flammability behavior significantly"
+      ],
+      "flame_characteristics": {
+        "shape": "Flat front spreading along surface with edge curling",
+        "color": "Blue base with yellow-orange trailing flame",
+        "spread_rate_microgravity": "0.3-1.8 cm/s",
+        "spread_rate_earth": "0.8-4.5 cm/s"
+      }
+    },
+    {
+      "id": "acme-bre",
+      "name": "ACME-BRE (Advanced Combustion via Microgravity Experiments - Burning Rate Emulator)",
+      "acronym": "ACME-BRE",
+      "category": "Gaseous Combustion",
+      "platform": "ISS",
+      "years": "2017-2019",
+      "description": "The Burning Rate Emulator used a gas burner to emulate the burning rates of solid and liquid fuels in a precisely controlled manner. By controlling fuel delivery rates to match real material pyrolysis, BRE enabled systematic study of how burning rate affects flame stability, extinction, and heat flux in microgravity without the complexity of solid fuel regression.",
+      "objectives": [
+        "Emulate burning behavior of real materials using precisely controlled gas burners",
+        "Map flame stability and extinction limits as a function of burning rate and oxygen",
+        "Determine radiative and convective heat flux partitioning in microgravity flames",
+        "Validate computational models of solid fuel combustion using simplified gas-fed flames",
+        "Characterize the transition between stable and unstable burning regimes"
+      ],
+      "materials_tested": [
+        "Methane-nitrogen gas mixtures (emulating various solid fuel pyrolysis rates)",
+        "Ethylene gas (emulating sooty fuels)"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 15, "max": 40, "unit": "%"},
+        "pressure": {"value": 100, "unit": "kPa"},
+        "flow_velocity": {"min": 5, "max": 25, "unit": "cm/s"},
+        "fuel_flow_rate": {"min": 0.1, "max": 5.0, "unit": "mg/s"}
+      },
+      "key_findings": [
+        "Radiative heat loss is the dominant flame extinction mechanism in microgravity for large diffusion flames",
+        "A minimum burning rate exists below which flames cannot sustain in microgravity, analogous to the extinction limit of solid fuels",
+        "Increasing oxygen concentration shifts the burning rate stability map, broadening the range of sustainable flames",
+        "The emulator successfully reproduced flame stand-off distances observed in real solid fuel experiments",
+        "Near-extinction flames exhibit oscillatory behavior with periodic brightening and dimming"
+      ],
+      "safety_implications": [
+        "Quantified relationship between burning rate and fire sustainability aids in fire risk modeling",
+        "Data supports development of computational tools for spacecraft fire safety assessment",
+        "Understanding extinction limits helps define safe operating envelopes for cabin atmospheres"
+      ],
+      "flame_characteristics": {
+        "shape": "Spherical to hemispherical on flat burner surface",
+        "color": "Blue for lean mixtures, yellow-orange for sooty fuels",
+        "spread_rate_microgravity": "N/A (stationary burner flame)",
+        "spread_rate_earth": "N/A (stationary burner flame)"
+      }
+    },
+    {
+      "id": "acme-cld",
+      "name": "ACME-CLD (Advanced Combustion via Microgravity Experiments - Coflow Laminar Diffusion Flame)",
+      "acronym": "ACME-CLD",
+      "category": "Gaseous Combustion",
+      "platform": "ISS",
+      "years": "2017-2019",
+      "description": "The Coflow Laminar Diffusion Flame experiment studied the structure, soot formation, and radiative emission of axisymmetric gaseous diffusion flames in microgravity. By eliminating buoyancy, CLD produced perfectly symmetric laminar diffusion flames that enabled precise comparison with computational flame models and advanced soot formation theories.",
+      "objectives": [
+        "Create benchmark-quality laminar diffusion flame data for computational model validation",
+        "Measure soot volume fraction distributions in buoyancy-free diffusion flames",
+        "Quantify radiative heat flux and its role in microgravity flame structure",
+        "Determine smoke point (soot inception limit) for various fuel compositions in microgravity",
+        "Compare flame shapes and lengths between microgravity and normal gravity"
+      ],
+      "materials_tested": [
+        "Methane",
+        "Ethylene",
+        "Ethylene-nitrogen mixtures",
+        "Propane"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"value": 21, "unit": "%"},
+        "pressure": {"value": 100, "unit": "kPa"},
+        "coflow_velocity": {"min": 10, "max": 35, "unit": "cm/s"},
+        "fuel_flow_rate": {"min": 0.2, "max": 2.0, "unit": "mg/s"}
+      },
+      "key_findings": [
+        "Microgravity diffusion flames are wider and shorter than their 1g counterparts due to the absence of buoyancy-induced flow acceleration",
+        "Soot formation in microgravity is enhanced compared to 1g for the same fuel flow conditions, leading to lower smoke points",
+        "Radiative losses from soot in microgravity flames are significantly higher due to longer soot residence times",
+        "Flame luminosity increases in microgravity due to higher soot volume fractions",
+        "Computational models using detailed soot kinetics agree well with microgravity flame data"
+      ],
+      "safety_implications": [
+        "Increased soot production in microgravity fires means more particulate smoke, requiring sensitive smoke detectors",
+        "Radiation-driven flame spread may be more significant in microgravity than in 1g",
+        "Smoke toxicity hazard is potentially greater in microgravity due to enhanced soot formation"
+      ],
+      "flame_characteristics": {
+        "shape": "Axisymmetric conical to bulbous",
+        "color": "Yellow-orange with luminous soot, blue base",
+        "spread_rate_microgravity": "N/A (stationary diffusion flame)",
+        "spread_rate_earth": "N/A (stationary diffusion flame)"
+      }
+    },
+    {
+      "id": "acme-sofie",
+      "name": "ACME-SoFIE (Advanced Combustion via Microgravity Experiments - Solid Fuel Ignition and Extinction)",
+      "acronym": "ACME-SoFIE",
+      "category": "Solid Combustion",
+      "platform": "ISS",
+      "years": "2019-2022",
+      "description": "ACME-SoFIE, part of the broader SoFIE program, studied the fundamental ignition and extinction processes of solid fuels in microgravity. It focused on determining the boundary between flammable and non-flammable conditions for materials used in spacecraft, supporting the development of NASA's next-generation material flammability screening methods.",
+      "objectives": [
+        "Determine the flammability boundaries (ignition and extinction limits) for solid fuels in microgravity",
+        "Measure the minimum oxygen concentration and flow velocity required for ignition",
+        "Investigate the effect of external radiant heat flux on ignition delay and flame establishment",
+        "Quantify the critical conditions for flame extinction including oxygen, flow, and heat loss",
+        "Support development of a material flammability index for spacecraft design"
+      ],
+      "materials_tested": [
+        "PMMA flat samples of varying thickness",
+        "PMMA rods and spheres",
+        "Cotton-fiberglass composite fabric",
+        "Silicone rubber"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 14, "max": 26, "unit": "%"},
+        "pressure": {"min": 56, "max": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 0, "max": 30, "unit": "cm/s"},
+        "radiant_heat_flux": {"min": 0, "max": 25, "unit": "kW/m²"}
+      },
+      "key_findings": [
+        "Ignition delay times increase by 20-50% in microgravity compared to 1g for comparable heat fluxes",
+        "The minimum oxygen concentration for sustained burning of PMMA in microgravity is approximately 15-16%",
+        "External radiant heat flux is the dominant factor in determining ignition time, overriding flow velocity effects",
+        "A flammability map in oxygen-flow velocity space shows a well-defined flammable envelope for each material",
+        "Material thickness significantly affects the extinction boundary due to in-depth heat conduction losses"
+      ],
+      "safety_implications": [
+        "Ignition thresholds developed in 1g may not be conservative for all microgravity scenarios",
+        "Material thickness should be considered in flammability assessment, not just surface properties",
+        "The flammability envelope concept provides a practical tool for spacecraft material selection"
+      ],
+      "flame_characteristics": {
+        "shape": "Hemispherical during ignition, transitioning to spreading front",
+        "color": "Blue initially, developing yellow edges as flame grows",
+        "spread_rate_microgravity": "0.2-1.5 cm/s",
+        "spread_rate_earth": "0.8-4.0 cm/s"
+      }
+    },
+    {
+      "id": "saffire-1",
+      "name": "SAFFIRE-I (Spacecraft Fire Experiment I)",
+      "acronym": "SAFFIRE-I",
+      "category": "Large-Scale Fire",
+      "platform": "Cygnus Resupply Vehicle",
+      "years": "2016",
+      "description": "SAFFIRE-I was the first large-scale fire experiment conducted in space. Performed aboard the Northrop Grumman Cygnus resupply vehicle after it departed the ISS, SAFFIRE-I ignited a 0.4m × 0.95m sample of cotton-fiberglass blend fabric to study flame growth and spread at scales relevant to actual spacecraft fires. It provided unprecedented data on large fire behavior in microgravity.",
+      "objectives": [
+        "Conduct the first large-scale fire growth experiment in microgravity",
+        "Determine if a large flame can sustain and spread over a realistic-sized material sample",
+        "Measure flame spread rate, heat release rate, and thermal environment of a large microgravity fire",
+        "Evaluate sensor performance for fire detection in spacecraft",
+        "Validate computational fire growth models at spacecraft-relevant scales"
+      ],
+      "materials_tested": [
+        "Cotton-fiberglass blend fabric (Solid Inflammability Boundary at Low-speed, SIBAL)"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"value": 21, "unit": "%"},
+        "pressure": {"value": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 15, "max": 25, "unit": "cm/s"},
+        "sample_size": {"width": 0.4, "length": 0.95, "unit": "m"}
+      },
+      "key_findings": [
+        "Large-scale flame spread was successfully sustained in microgravity for the first time",
+        "The flame spread rate over the large sample was approximately 1.0 cm/s, lower than small-scale ISS experiments at comparable conditions",
+        "Flame front was remarkably flat and uniform across the 40 cm sample width",
+        "Peak heat flux to the surrounding structure reached levels that could damage nearby equipment",
+        "Post-fire analysis showed complete combustion of the fabric with minimal residue"
+      ],
+      "safety_implications": [
+        "Confirmed that large fires can sustain and grow in microgravity spacecraft environments",
+        "Heat flux measurements inform structural fire protection design requirements",
+        "Fire detection sensors must be calibrated for the different smoke signatures of microgravity fires",
+        "Validated that fire modeling tools can be extended to spacecraft-scale scenarios"
+      ],
+      "flame_characteristics": {
+        "shape": "Flat uniform front across full sample width",
+        "color": "Orange-yellow luminous flame with blue leading edge",
+        "spread_rate_microgravity": "0.8-1.2 cm/s",
+        "spread_rate_earth": "2.0-6.0 cm/s"
+      }
+    },
+    {
+      "id": "saffire-2",
+      "name": "SAFFIRE-II (Spacecraft Fire Experiment II)",
+      "acronym": "SAFFIRE-II",
+      "category": "Large-Scale Fire",
+      "platform": "Cygnus Resupply Vehicle",
+      "years": "2016",
+      "description": "SAFFIRE-II focused on the material flammability screening aspect, testing nine small samples of different materials in the Cygnus vehicle. Unlike SAFFIRE-I's large single sample, SAFFIRE-II evaluated multiple materials simultaneously, assessing their relative flammability in a realistic spacecraft atmosphere and airflow.",
+      "objectives": [
+        "Evaluate the flammability of multiple spacecraft-relevant materials in microgravity",
+        "Compare material flammability rankings between microgravity and standard 1g testing (NASA-STD-6001 Test 1)",
+        "Assess the accuracy of ground-based screening tests for microgravity fire prediction",
+        "Measure flame spread rates and thermal signatures for each material sample",
+        "Determine if any materials that pass ground-based testing fail in actual microgravity"
+      ],
+      "materials_tested": [
+        "Cotton-fiberglass blend fabric (SIBAL)",
+        "Nomex HT90-40",
+        "PMMA (acrylic)",
+        "Silicone rubber",
+        "Polyethylene",
+        "Teflon (PTFE)",
+        "Kapton polyimide film",
+        "Velcro",
+        "Nylon fabric"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"value": 21, "unit": "%"},
+        "pressure": {"value": 101.3, "unit": "kPa"},
+        "flow_velocity": {"value": 20, "unit": "cm/s"},
+        "sample_size": {"width": 0.05, "length": 0.30, "unit": "m"}
+      },
+      "key_findings": [
+        "Material flammability rankings in microgravity showed several differences compared to 1g Test 1 results",
+        "Some materials that barely passed ground-based flammability tests sustained flames in microgravity at comparable conditions",
+        "Silicone rubber showed higher than expected flammability in microgravity due to reduced dripping and falling of melted material",
+        "Teflon and Kapton remained flame-resistant in microgravity, consistent with ground-based testing",
+        "Nomex showed borderline flammability behavior, with flames that self-extinguished after brief propagation"
+      ],
+      "safety_implications": [
+        "Ground-based Test 1 results do not always predict microgravity flammability accurately",
+        "Material selection for spacecraft should include supplemental microgravity flammability data",
+        "Some borderline materials require re-evaluation for use in exploration vehicles",
+        "Self-extinguishing behavior observed in 1g may not occur in microgravity for certain materials"
+      ],
+      "flame_characteristics": {
+        "shape": "Varies by material — flat fronts on fabrics, receding spherical on polymers",
+        "color": "Material-dependent: blue (PMMA), yellow-orange (fabrics), white-green (silicone)",
+        "spread_rate_microgravity": "0.2-1.5 cm/s (material dependent)",
+        "spread_rate_earth": "0.5-5.0 cm/s (material dependent)"
+      }
+    },
+    {
+      "id": "saffire-3",
+      "name": "SAFFIRE-III (Spacecraft Fire Experiment III)",
+      "acronym": "SAFFIRE-III",
+      "category": "Large-Scale Fire",
+      "platform": "Cygnus Resupply Vehicle",
+      "years": "2017",
+      "description": "SAFFIRE-III repeated the large-scale fire experiment of SAFFIRE-I with a thicker composite material sample and higher airflow velocity. It aimed to determine the effect of material thickness and increased ventilation on large fire behavior in microgravity, simulating a more challenging fire scenario.",
+      "objectives": [
+        "Investigate large-scale fire growth with thicker fuel samples in microgravity",
+        "Assess the effect of higher forced airflow on large flame behavior",
+        "Determine if increased airflow accelerates or suppresses large fires in microgravity",
+        "Measure heat release rate and total heat output for thicker burning materials",
+        "Provide additional data points for computational fire growth model validation"
+      ],
+      "materials_tested": [
+        "Cotton-fiberglass blend fabric (SIBAL) — thicker composite layup"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"value": 21, "unit": "%"},
+        "pressure": {"value": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 20, "max": 40, "unit": "cm/s"},
+        "sample_size": {"width": 0.4, "length": 0.95, "unit": "m"}
+      },
+      "key_findings": [
+        "Flame spread rate increased with higher airflow velocity, contrary to some small-scale predictions",
+        "Thicker samples burned for a longer duration with higher total heat release",
+        "The flame front remained relatively uniform but showed more instability at higher flows",
+        "Peak structural temperatures exceeded those measured in SAFFIRE-I",
+        "Post-combustion residue analysis showed incomplete combustion at the thicker sample core"
+      ],
+      "safety_implications": [
+        "Higher ventilation rates can exacerbate fire growth for large fires in microgravity",
+        "Thicker materials pose a greater thermal hazard due to prolonged burning and higher heat release",
+        "Ventilation system shutdown is critical for fire suppression in spacecraft",
+        "Fire protection design must account for worst-case ventilation scenarios"
+      ],
+      "flame_characteristics": {
+        "shape": "Broad flat front with undulating edges at high flow",
+        "color": "Bright orange-yellow with significant luminosity",
+        "spread_rate_microgravity": "1.0-1.8 cm/s",
+        "spread_rate_earth": "2.5-7.0 cm/s"
+      }
+    },
+    {
+      "id": "flex-1",
+      "name": "FLEX (Flame Extinguishment Experiment)",
+      "acronym": "FLEX",
+      "category": "Droplet Combustion",
+      "platform": "ISS",
+      "years": "2009-2012",
+      "description": "FLEX studied the burning and extinction of isolated fuel droplets in microgravity. The experiment revealed the extraordinary phenomenon of 'cool flame' burning — a low-temperature combustion mode that persists after visible flame extinction. FLEX provided fundamental insights into droplet combustion dynamics and the previously unknown cool flame regime.",
+      "objectives": [
+        "Measure burning rates and extinction diameters of isolated fuel droplets in microgravity",
+        "Determine the effect of fuel composition and ambient oxygen on droplet flame extinction",
+        "Discover and characterize non-visible low-temperature combustion modes (cool flames)",
+        "Validate droplet combustion theory and computational models in buoyancy-free conditions",
+        "Investigate the role of radiative heat loss in droplet flame extinction"
+      ],
+      "materials_tested": [
+        "n-Heptane droplets",
+        "Methanol droplets",
+        "Heptane-methanol mixtures",
+        "n-Decane droplets"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 15, "max": 35, "unit": "%"},
+        "pressure": {"min": 50, "max": 300, "unit": "kPa"},
+        "droplet_diameter": {"min": 1.0, "max": 5.0, "unit": "mm"},
+        "ambient_gas": "Nitrogen-oxygen and helium-oxygen mixtures"
+      },
+      "key_findings": [
+        "Discovered 'cool flame' combustion: after visible flame extinction, droplets continued to burn in a low-temperature, non-luminous mode",
+        "Cool flames are sustained by low-temperature oxidation chemistry (below ~700K) and can persist for extended periods",
+        "Droplet burning rates in microgravity agree well with classical d-squared law during the quasi-steady phase",
+        "Radiative heat loss is the primary cause of hot-flame extinction in large droplets",
+        "Extinction diameter scales with initial droplet diameter and ambient oxygen concentration",
+        "Cool flame burning produces different combustion products, including aldehydes and peroxides"
+      ],
+      "safety_implications": [
+        "Cool flames represent an invisible fire hazard that conventional optical detectors cannot see",
+        "Low-temperature combustion products (aldehydes, peroxides) are toxic and require chemical sensing",
+        "Fuel spills in microgravity could sustain non-visible burning for extended periods",
+        "Fire suppression systems must account for re-ignition from cool flame regions"
+      ],
+      "flame_characteristics": {
+        "shape": "Spherical envelope surrounding droplet (hot flame); invisible shell (cool flame)",
+        "color": "Blue spherical flame (hot); invisible/non-luminous (cool flame)",
+        "spread_rate_microgravity": "N/A (single droplet burning)",
+        "spread_rate_earth": "N/A (single droplet burning)"
+      }
+    },
+    {
+      "id": "flex-2",
+      "name": "FLEX-2 (Flame Extinguishment Experiment 2)",
+      "acronym": "FLEX-2",
+      "category": "Droplet Combustion",
+      "platform": "ISS",
+      "years": "2012-2015",
+      "description": "FLEX-2 continued the droplet combustion research of FLEX with a focus on multi-component fuels, larger droplet sizes, and the systematic characterization of cool flame dynamics. The experiment mapped the conditions under which cool flames arise and determined the chemical pathways responsible for this unusual combustion mode.",
+      "objectives": [
+        "Characterize cool flame dynamics as a function of fuel type, droplet size, and ambient conditions",
+        "Investigate multi-component fuel droplet burning and its relevance to practical liquid fuel spills",
+        "Measure the chemical products of cool flame combustion for toxicity assessment",
+        "Determine if cool flames can transition back to hot flame ignition under certain conditions",
+        "Provide comprehensive dataset for development of cool flame chemical kinetic models"
+      ],
+      "materials_tested": [
+        "n-Heptane droplets",
+        "n-Decane droplets",
+        "Heptane-hexadecane bi-component droplets",
+        "Dodecane droplets",
+        "n-Octane droplets"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 15, "max": 30, "unit": "%"},
+        "pressure": {"min": 100, "max": 300, "unit": "kPa"},
+        "droplet_diameter": {"min": 2.0, "max": 6.0, "unit": "mm"},
+        "ambient_gas": "Nitrogen-oxygen and carbon dioxide-oxygen mixtures"
+      },
+      "key_findings": [
+        "Cool flames can persist for up to 20 seconds after hot flame extinction for large droplets",
+        "Cool flame burning rate is approximately 50-70% lower than hot flame burning rate",
+        "Bi-component droplets showed preferential vaporization effects that delayed cool flame onset",
+        "Elevated pressure significantly extends the cool flame duration and broadens the cool flame regime",
+        "Cool-to-hot flame re-ignition was observed under specific conditions of higher pressure and oxygen",
+        "Gas chromatography analysis confirmed formaldehyde and hydrogen peroxide as primary cool flame products"
+      ],
+      "safety_implications": [
+        "Extended cool flame duration increases window of invisible fire hazard",
+        "Multi-component fuel spills may behave unpredictably with different cool flame characteristics",
+        "Cool-to-hot flame re-ignition possibility means suppressed fires could reignite spontaneously",
+        "Cabin atmosphere monitoring must include chemical sensors for aldehyde detection"
+      ],
+      "flame_characteristics": {
+        "shape": "Spherical (hot flame); diffuse spherical shell (cool flame)",
+        "color": "Blue-white sphere (hot); completely invisible (cool flame)",
+        "spread_rate_microgravity": "N/A (single droplet burning)",
+        "spread_rate_earth": "N/A (single droplet burning)"
+      }
+    },
+    {
+      "id": "spice",
+      "name": "SPICE (Smoke Point In Coflow Experiment)",
+      "acronym": "SPICE",
+      "category": "Gaseous Combustion",
+      "platform": "ISS",
+      "years": "2019-2021",
+      "description": "SPICE measured the smoke point — the critical condition at which soot begins to escape from a laminar diffusion flame — for various gaseous fuels in microgravity. Understanding soot emission limits is crucial for predicting smoke generation from fires in spacecraft and designing effective smoke detection systems.",
+      "objectives": [
+        "Determine the smoke point for multiple fuel types in microgravity coflow diffusion flames",
+        "Compare microgravity smoke points with 1g measurements to assess buoyancy effects",
+        "Quantify the relationship between fuel flow rate, coflow velocity, and soot emission onset",
+        "Evaluate the effect of inert dilution of fuel on smoke point behavior",
+        "Provide data for improving computational soot models"
+      ],
+      "materials_tested": [
+        "Methane",
+        "Ethylene",
+        "Propylene",
+        "75/25 Ethylene-nitrogen mixtures",
+        "50/50 Ethylene-nitrogen mixtures"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"value": 21, "unit": "%"},
+        "pressure": {"value": 100, "unit": "kPa"},
+        "coflow_velocity": {"min": 10, "max": 50, "unit": "cm/s"},
+        "fuel_flow_rate": {"min": 0.1, "max": 3.0, "unit": "mg/s"}
+      },
+      "key_findings": [
+        "Smoke points in microgravity are consistently lower than in 1g, meaning soot emission occurs at lower fuel flow rates",
+        "The reduction in smoke point from 1g to microgravity ranges from 30-50% depending on fuel type",
+        "Longer soot residence times in microgravity flames allow more soot growth and aggregation",
+        "Coflow velocity has a significant effect on smoke point, with higher coflow delaying soot emission",
+        "Nitrogen dilution of fuel increases the smoke point proportionally in both 1g and microgravity"
+      ],
+      "safety_implications": [
+        "Fires in microgravity produce more smoke per unit fuel consumed than equivalent 1g fires",
+        "Smoke detectors for spacecraft must have higher sensitivity than ground-based systems",
+        "Ventilation airflow affects smoke dispersion patterns, influencing detector placement",
+        "Smoke toxicity assessment should account for microgravity-specific soot characteristics"
+      ],
+      "flame_characteristics": {
+        "shape": "Elongated conical with rounded tip at smoke point transition",
+        "color": "Blue base transitioning to yellow-orange tip; bright orange soot wings at smoke point",
+        "spread_rate_microgravity": "N/A (stationary diffusion flame)",
+        "spread_rate_earth": "N/A (stationary diffusion flame)"
+      }
+    },
+    {
+      "id": "sofie",
+      "name": "SoFIE (Solid Fuel Ignition and Extinction)",
+      "acronym": "SoFIE",
+      "category": "Solid Combustion",
+      "platform": "ISS",
+      "years": "2022-present",
+      "description": "SoFIE is NASA's flagship ongoing microgravity combustion research facility aboard the ISS. It investigates the conditions under which solid materials ignite, burn, and extinguish in microgravity to support fire safety for Artemis lunar missions and future Mars transit vehicles. SoFIE encompasses multiple sub-experiments studying diverse materials under conditions representative of exploration atmospheres.",
+      "objectives": [
+        "Map the complete flammability boundaries for spacecraft materials in exploration atmospheres",
+        "Investigate burning behavior at reduced pressures (8.2 psia / 56.5 kPa) with enriched oxygen (34%)",
+        "Determine ignition and extinction limits as a function of oxygen, pressure, and flow",
+        "Support development of NASA's next-generation material flammability screening standard",
+        "Test materials planned for use in Artemis lunar surface habitats and transit vehicles",
+        "Study flame spread, regression, and thermal hazard for thick solid fuels"
+      ],
+      "materials_tested": [
+        "PMMA (acrylic) in various geometries",
+        "Cotton-fiberglass fabric (SIBAL)",
+        "Nomex",
+        "Silicone rubber",
+        "Kapton polyimide film",
+        "Candidate Artemis habitat materials"
+      ],
+      "parameters": {
+        "oxygen_concentration": {"min": 17, "max": 34, "unit": "%"},
+        "pressure": {"min": 56.5, "max": 101.3, "unit": "kPa"},
+        "flow_velocity": {"min": 0, "max": 40, "unit": "cm/s"},
+        "radiant_heat_flux": {"min": 0, "max": 50, "unit": "kW/m²"}
+      },
+      "key_findings": [
+        "Exploration atmosphere (34% O2, 56.5 kPa) shows increased flammability for most materials compared to standard ISS atmosphere",
+        "PMMA flammability boundary shifts to lower flow velocities in reduced pressure exploration atmosphere",
+        "Material rankings for flammability change between standard and exploration atmospheres",
+        "Radiative ignition thresholds are lower in exploration atmosphere due to enhanced oxygen availability",
+        "Thin PMMA samples in exploration atmosphere show flame spread rates comparable to standard atmosphere at 1g"
+      ],
+      "safety_implications": [
+        "Exploration atmosphere conditions may require more stringent material selection criteria",
+        "Material flammability databases must be expanded to include exploration-relevant atmospheric conditions",
+        "Fire detection and suppression systems must be designed for the specific atmospheric conditions of each vehicle",
+        "Habitat design for lunar and Martian missions requires new fire safety protocols based on SoFIE results"
+      ],
+      "flame_characteristics": {
+        "shape": "Hemispherical to elongated spreading front",
+        "color": "Blue to blue-white at low O2, brighter yellow at 34% O2",
+        "spread_rate_microgravity": "0.5-3.0 cm/s (atmosphere dependent)",
+        "spread_rate_earth": "1.0-6.0 cm/s"
+      }
+    }
+  ]
+}

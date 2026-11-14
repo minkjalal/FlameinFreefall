@@ -1,0 +1,279 @@
+{
+  "findings": [
+    {
+      "id": "f01",
+      "title": "Quiescent Sphericity and Convective Absence in Microgravity",
+      "category": "Flame Dynamics",
+      "source_experiment": "FLEX",
+      "description": "In the absence of buoyancy-driven natural convection, isolated fuel droplets burn with near-perfect spherical symmetry. The absence of rising buoyant plumes significantly alters temperature fields and oxidizer transport mechanisms.",
+      "conditions": {"gravity": "0-g (microgravity)", "o2": "21%", "pressure": "101.3 kPa", "flow": "0 cm/s"},
+      "quantitative_result": "Flame sphericity index > 0.98; peak gas temperatures 150-250 K lower than buoyant counterparts",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Standard terrestrial flame sensors calibrated for upward plume thermal signatures fail to detect spherical fires."
+    },
+    {
+      "id": "f02",
+      "title": "Cool Flame Burning Sustained Below Classical Flammability Limits",
+      "category": "Low-Temperature Combustion",
+      "source_experiment": "FLEX-2",
+      "description": "After apparent radiative extinction of the hot visible flame, droplet burning continues in a low-temperature 'cool flame' chemical regime driven by low-temperature hydrocarbon oxidation pathways.",
+      "conditions": {"gravity": "0-g", "fuel": "n-alkanes (heptane, octane)", "pressure": "1.0 atm"},
+      "quantitative_result": "Cool flame temperatures range between 600 K - 800 K; sustained invisible reaction lasts up to 40 seconds post-extinction",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Fires may appear fully extinguished while continuing to release carbon monoxide, formaldehyde, and volatile intermediates."
+    },
+    {
+      "id": "f03",
+      "title": "Concurrent Solid Fuel Flame Spread Reduction",
+      "category": "Solid Combustion",
+      "source_experiment": "BASS",
+      "description": "Concurrent flame spread rates over thin solid fuels (such as PMMA and cotton blends) in microgravity are 30% to 60% lower than corresponding normal-gravity upward spread tests.",
+      "conditions": {"gravity": "microgravity", "flow_velocity": "2 to 20 cm/s", "o2": "16% - 22%"},
+      "quantitative_result": "Spread rates between 0.3 mm/s and 1.8 mm/s vs 2.5 mm/s on Earth",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Slower fire spread provides extended crew egress time, but masks rapid internal thermal accumulation in confined spaces."
+    },
+    {
+      "id": "f04",
+      "title": "Opposed-Flow Extinction Boundary Shift",
+      "category": "Extinction Phenomena",
+      "source_experiment": "BASS-II",
+      "description": "In opposed flow, flame stabilization exhibits a dual extinction limit: blowing extinction at high velocity (>35 cm/s) and radiative quenching at extremely low velocity (<2 cm/s).",
+      "conditions": {"gravity": "microgravity", "flow_velocity": "0.5 to 45 cm/s", "sample": "Cast PMMA sheets"},
+      "quantitative_result": "Radiative extinction boundary reached at 1.5 cm/s forced air velocity at 21% O2",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Simply reducing cabin ventilation can extinguish opposed-flow flames through radiative heat loss without expending chemical suppressants."
+    },
+    {
+      "id": "f05",
+      "title": "Large-Scale Fire Propagation Dynamics in Cygnus Cargo Craft",
+      "category": "Spacecraft Scale Tests",
+      "source_experiment": "SAFFIRE-I",
+      "description": "First large-scale fire experiment inside an uncrewed operational spacecraft confirmed that continuous cotton-fiberglass fabric samples propagate flame stably without buoyant lifting or tearing.",
+      "conditions": {"gravity": "microgravity", "dimensions": "0.4m x 1.0m sample", "flow": "20 cm/s forced flow"},
+      "quantitative_result": "Steady flame spread velocity of 0.8 cm/s; peak heat release reached 45 kW",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Demonstrates that terrestrial small-scale NASA STD-6001 Test 1 flammability tests underestimate real space vehicle fire propagation rates."
+    },
+    {
+      "id": "f06",
+      "title": "Oxygen Depletion and Pressure Drop in Sealed Spacecraft Cabin",
+      "category": "Atmospheric Dynamics",
+      "source_experiment": "SAFFIRE-II",
+      "description": "Evaluated multiple fuel samples under varying atmospheric pressures and oxygen fractions during spacecraft departure trajectory.",
+      "conditions": {"gravity": "microgravity", "pressure_range": "55 kPa to 101 kPa", "o2": "18% to 28%"},
+      "quantitative_result": "Limiting Oxygen Index (LOI) shifts by 2.5% to 4.0% depending on ambient pressure level",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Exploration atmospheres (e.g., 34% O2 at 56 kPa for Artemis Moon missions) increase material flammability despite lower total pressure."
+    },
+    {
+      "id": "f07",
+      "title": "Enhanced Soot Formation and Radiative Feedback",
+      "category": "Soot & Radiation",
+      "source_experiment": "SPICE",
+      "description": "Because residence times of hydrocarbon intermediates are extended in microgravity laminar coflow flames, soot agglomeration increases by over 100% relative to 1g conditions.",
+      "conditions": {"gravity": "0-g", "fuel": "Ethylene / Propane coflow", "oxidizer": "Air"},
+      "quantitative_result": "Soot volume fraction f_v doubled; radiative heat emission increased by 45%",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Higher soot levels cause severe optical obscuration, blinding navigation optics, and rapidly clogging Environmental Control and Life Support (ECLSS) filters."
+    },
+    {
+      "id": "f08",
+      "title": "Smoke Particle Size Distribution Shift Toward Larger Agglomerates",
+      "category": "Detection Systems",
+      "source_experiment": "SPICE",
+      "description": "Absence of buoyant shear forces allows soot primary spheres to aggregate into elongated chain networks with aerodynamic diameters 3-5 times larger than in 1g.",
+      "conditions": {"gravity": "microgravity", "diagnostics": "Laser extinction & TEM sampling"},
+      "quantitative_result": "Mean aggregate radius of gyration R_g increased from 85 nm (1g) to 320 nm (0g)",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Ionization smoke detectors have reduced sensitivity to larger agglomerates; light-scattering photoelectric detectors perform far better in space."
+    },
+    {
+      "id": "f09",
+      "title": "Gaseous Fuel Burning Rate Emulation and Boundary Layer Attachment",
+      "category": "Gaseous Combustion",
+      "source_experiment": "ACME-BRE",
+      "description": "A flat porous burner emitting controlled gaseous fuel simulated solid material burning behavior without surface char degradation complexities.",
+      "conditions": {"gravity": "microgravity", "fuels": "Methane, Ethylene", "diluent": "N2, CO2"},
+      "quantitative_result": "Flame standoff distance increased by 300% compared to 1g boundary layers",
+      "safety_relevance": "Medium",
+      "implications_for_spacecraft": "Flames stand farther off surfaces in microgravity, transferring less heat directly back to the condensed phase in quiescent atmospheres."
+    },
+    {
+      "id": "f10",
+      "title": "Electric Field Manipulation and Flame Extinction Control",
+      "category": "Active Suppression",
+      "source_experiment": "ACME-E-FIELD",
+      "description": "Application of non-uniform electrostatic fields (up to 5 kV) exerted ionic wind body forces on chemi-ions, allowing remote flame deflection and rapid extinction.",
+      "conditions": {"gravity": "microgravity", "voltage": "0 to 10 kV DC", "electrode_gap": "50 mm"},
+      "quantitative_result": "Flame lift-off and extinction achieved in under 1.2 seconds without chemical extinguishant",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Provides a non-toxic, non-contaminating suppression mechanism for avionics bays and enclosed instrument electronics."
+    },
+    {
+      "id": "f11",
+      "title": "Limiting Oxygen Index of Nomex and Advanced Polyamides",
+      "category": "Material Limits",
+      "source_experiment": "BASS-II",
+      "description": "Evaluated the flammability boundaries of flame-retardant synthetic aramids under low forced airflow in microgravity.",
+      "conditions": {"gravity": "microgravity", "material": "Nomex-90/10", "flow": "5 cm/s"},
+      "quantitative_result": "Nomex self-extinguishes below 26.5% O2 at 101 kPa in microgravity",
+      "safety_relevance": "Medium",
+      "implications_for_spacecraft": "Nomex remains completely self-extinguishing in standard ISS air (21% O2), but becomes combustible in lunar suit airlock staging areas (up to 30% O2)."
+    },
+    {
+      "id": "f12",
+      "title": "Charring Polymer Ignition Delays and Crust Rupturing",
+      "category": "Solid Pyrolysis",
+      "source_experiment": "SoFIE-GEL",
+      "description": "Thick charring polymers in microgravity form insulating superficial char caps that periodically rupture due to internal gas pressurization, ejecting hot pyrolyzing sparks.",
+      "conditions": {"gravity": "microgravity", "materials": "Polyimide foam, Epoxy matrix composites"},
+      "quantitative_result": "Internal pressure buildup exceeds 12 kPa prior to char eruptive venting",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Secondary fire ignition risk across habitat modules caused by drifting glowing embers unconstrained by gravity."
+    },
+    {
+      "id": "f13",
+      "title": "Water Mist Extinguishment Efficiency in Confined Geometries",
+      "category": "Fire Suppression",
+      "source_experiment": "FLEX-2",
+      "description": "Fine atomized water droplets (10-50 µm) demonstrate exceptional heat absorption in microgravity because droplets remain suspended rather than settling downward.",
+      "conditions": {"gravity": "0-g", "droplet_mvd": "25 microns", "concentration": "80 g/m3"},
+      "quantitative_result": "Flame extinguishment achieved with 55% less water volume than required in 1g tests",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Water mist is an ideal non-halon suppression agent that protects crew respiratory health and avoids toxic agent cleanup."
+    },
+    {
+      "id": "f14",
+      "title": "Smoldering Transition to Flaming Under Forced Ventilation",
+      "category": "Smoldering Combustion",
+      "source_experiment": "BASS",
+      "description": "Open-cell polyurethane foam samples undergoing quiescent smoldering rapidly transitioned to open flaming when ventilation was restored to nominal cabin flow rates.",
+      "conditions": {"gravity": "microgravity", "initial_flow": "0 cm/s", "step_flow": "15 cm/s"},
+      "quantitative_result": "Transition time from smolder to vigorous flame: 4.8 seconds after flow resumption",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Cabin ventilation must NEVER be re-engaged following a suspected fire until thermal imaging verifies complete cooling below pyrolysis thresholds."
+    },
+    {
+      "id": "f15",
+      "title": "Lunar Gravity (0.16g) Combustion Behavior on Parabolic Flights",
+      "category": "Partial Gravity",
+      "source_experiment": "Aircraft Parabolic Campaign",
+      "description": "Combustion spread in lunar gravity (0.16g) is often more hazardous than either 0g or 1g, as partial buoyancy supplies fresh oxidizer while heat losses remain modest.",
+      "conditions": {"gravity": "0.16 g (Lunar)", "fuel": "Thin cellulosic sheets", "o2": "21%"},
+      "quantitative_result": "Flame spread rate at 0.16g peaked 20% higher than identical samples at 0g under 5 cm/s flow",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Lunar base fire protection standards cannot simply interpolate between 0g ISS and 1g Earth data."
+    },
+    {
+      "id": "f16",
+      "title": "Martian Gravity (0.38g) and CO2 Atmosphere Interactions",
+      "category": "Partial Gravity",
+      "source_experiment": "NASA Glenn Drop Tower / Parabolic",
+      "description": "Studied flame anchoring and spread at 0.38g in environments representing surface habitat interior conditions with accidental external CO2 ingress.",
+      "conditions": {"gravity": "0.38 g (Mars)", "ambient": "Habitat pressure 56 kPa, 28% O2"},
+      "quantitative_result": "Critical flame spread velocity 1.4 mm/s; lower flammability limit shifts by +1.8% O2",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Habitats on Mars experience moderate buoyancy, requiring directional ventilation baffles near sleeping quarters."
+    },
+    {
+      "id": "f17",
+      "title": "Combustion of Wire Insulation in Overheated Cable Harnesses",
+      "category": "Electrical Fire",
+      "source_experiment": "BASS-II",
+      "description": "Electrical wire bundles with PTFE (Teflon) and ETFE (Tefzel) insulations subject to high current overloads generate toxic pyrolyzates before visible flame ignition.",
+      "conditions": {"gravity": "microgravity", "current_overload": "300% rated", "wire_type": "AWG 20 Mil-Spec"},
+      "quantitative_result": "Hydrogen fluoride (HF) and carbonyl fluoride (COF2) outgassing detected 45s before ignition",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Off-gas chemical trace sensors provide earlier warning of harness failure than conventional particulate detectors."
+    },
+    {
+      "id": "f18",
+      "title": "CO2 Dilution Extinction Curves in Microgravity",
+      "category": "Fire Suppression",
+      "source_experiment": "ACME-CLD",
+      "description": "Carbon dioxide is substantially more effective at radiative flame suppression in microgravity because trapped hot CO2 emits thermal radiation omnidirectionally, cooling the flame zone.",
+      "conditions": {"gravity": "microgravity", "flame": "Laminar coflow diffusion", "inert": "CO2 vs N2"},
+      "quantitative_result": "18% lower CO2 concentration needed for flame extinction in 0g than in 1g",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Portable CO2 fire extinguishers currently deployed on ISS are highly effective, but require crew breathing mask donning immediately."
+    },
+    {
+      "id": "f19",
+      "title": "Teflon (PTFE) Thermal Decomposition Pathways in Reduced Gravity",
+      "category": "Material Flammability",
+      "source_experiment": "SoFIE",
+      "description": "PTFE decomposes endothermically into gaseous fluorocarbon monomers; in microgravity, dense fluorocarbon vapors blanket the surface, delaying ignition until high radiant flux is reached.",
+      "conditions": {"gravity": "microgravity", "radiant_flux": "10 to 45 kW/m2", "material": "Solid PTFE rod"},
+      "quantitative_result": "Critical heat flux for ignition: 32 kW/m2 in microgravity vs 26 kW/m2 in Earth gravity",
+      "safety_relevance": "Medium",
+      "implications_for_spacecraft": "PTFE remains one of the safest insulation polymers for spaceflight, provided high-temperature gas traps are installed."
+    },
+    {
+      "id": "f20",
+      "title": "Surface Orientation Independence of Flame Spread",
+      "category": "Geometric Effects",
+      "source_experiment": "SAFFIRE-III",
+      "description": "Unlike Earth fires where upward spread is an order of magnitude faster than downward spread, microgravity flame spread speed is entirely governed by airflow vector relative to the fuel surface.",
+      "conditions": {"gravity": "microgravity", "sample_angles": "0, 45, 90, 180 degrees", "flow": "15 cm/s"},
+      "quantitative_result": "Variance across orientations < 4% (compared to > 800% variance in 1g)",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Fire spread direction in spacecraft cannot be predicted by vertical geometry; ductwork and ventilation maps are the sole determinants."
+    },
+    {
+      "id": "f21",
+      "title": "Soot Deposition on Radiative Heat Exchangers",
+      "category": "Environmental Hazards",
+      "source_experiment": "SPICE",
+      "description": "Soot particles generated in microgravity exhibit thermophoretic migration toward cold habitat hull panels and radiator heat exchangers, degrading radiative emissivity.",
+      "conditions": {"gravity": "microgravity", "wall_delta_t": "40 K", "duration": "120s combustion"},
+      "quantitative_result": "Thermal emissivity reduced by 28% after single small soot deposition event",
+      "safety_relevance": "Medium",
+      "implications_for_spacecraft": "Even small uncontained flame events jeopardize habitat thermal balance by fouling active cooling surfaces."
+    },
+    {
+      "id": "f22",
+      "title": "Low-Speed Quenching Distance Expansion",
+      "category": "Combustion Physics",
+      "source_experiment": "ACME-s-Flame",
+      "description": "Spherical diffusion flames expand significantly, with flame zone quenching distances from metallic surfaces increasing by a factor of 2.5 to 3.0.",
+      "conditions": {"gravity": "microgravity", "fuel": "Methane / Air spherical flame"},
+      "quantitative_result": "Quenching distance expanded from 1.8 mm (1g) to 5.2 mm (0g)",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Terrestrial flame arrestors and mesh screens may allow microgravity flames to penetrate through gaps that are safe on Earth."
+    },
+    {
+      "id": "f23",
+      "title": "Flammability of 3D-Printed Thermoplastics (Ultem and PEEK)",
+      "category": "Additive Manufacturing",
+      "source_experiment": "SoFIE-MIST",
+      "description": "Evaluated 3D printed PEEK and Ultem 9085 flight parts. Layer orientation and print porosity introduce microscopic oxygen diffusion channels that accelerate flame spread along layer seams.",
+      "conditions": {"gravity": "microgravity", "print_layer_thickness": "0.2 mm", "o2": "21% - 28%"},
+      "quantitative_result": "Flame spread along print layer axis was 22% faster than perpendicular to layers",
+      "safety_relevance": "High",
+      "implications_for_spacecraft": "Spacecraft 3D printed components must align print layers perpendicular to expected cabin ventilation flow vectors."
+    },
+    {
+      "id": "f24",
+      "title": "Silicone Elastomer Sealant Combustion and Silica Ash Shedding",
+      "category": "Material Degradation",
+      "source_experiment": "BASS",
+      "description": "Combustion of silicone seals produces a brittle white silicon dioxide (SiO2) ash layer. In 0g, this ash crust floats freely as abrasive airborne particles.",
+      "conditions": {"gravity": "microgravity", "fuel": "RTV silicone bead", "flow": "8 cm/s"},
+      "quantitative_result": "100% of silica ash released into circulation stream without gravitational settling",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Floating silica ash poses immediate optical and lung damage hazards to astronauts during and after fire events."
+    },
+    {
+      "id": "f25",
+      "title": "Toxic Gas Yield Ratio: CO to CO2 in Under-Ventilated Microgravity Fires",
+      "category": "Toxicity",
+      "source_experiment": "SAFFIRE-II",
+      "description": "Due to restricted oxygen diffusion in microgravity combustion, the CO/CO2 yield ratio increases dramatically, generating lethal concentrations of carbon monoxide rapidly.",
+      "conditions": {"gravity": "microgravity", "ventilation": "Low flow (5 cm/s)", "fuel": "PMMA & SIBAL cloth"},
+      "quantitative_result": "CO/CO2 mass ratio rose from 0.04 (well-ventilated 1g) to 0.28 (microgravity enclosure)",
+      "safety_relevance": "Critical",
+      "implications_for_spacecraft": "Crew incapacitation from carbon monoxide poisoning occurs 3× faster in microgravity enclosure fires than in equivalent terrestrial room fires."
+    }
+  ]
+}
